@@ -22,54 +22,52 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button1 = (Button) findViewById(R.id.button1);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onButton1Clicked(MainActivity.this);
-            }
-        });
-        Button button2 = (Button) findViewById(R.id.button2);
-        Button button3 = (Button) findViewById(R.id.button3);
-        Button button4 = (Button) findViewById(R.id.button4);
-
+        // 변수 선언
         textView = (TextView) findViewById(R.id.textView);
-        flowAnim = AnimationUtils.loadAnimation(this, R.anim.flow);
-
         textView2 = (TextView) findViewById(R.id.textView2);
-        alphaAnim = AnimationUtils.loadAnimation(this, R.anim.alpha);
-
         textView3 = (TextView) findViewById(R.id.textView3);
-        flowAnim2 = AnimationUtils.loadAnimation(this, R.anim.flow);
-
         textView4 = (TextView) findViewById(R.id.textView4);
+
+        // 애니메이션
+        flowAnim = AnimationUtils.loadAnimation(this, R.anim.flow);
+        alphaAnim = AnimationUtils.loadAnimation(this, R.anim.alpha);
+        flowAnim2 = AnimationUtils.loadAnimation(this, R.anim.flow);
         alphaAnim2 = AnimationUtils.loadAnimation(this, R.anim.alpha);
 
+
+        // 클릭 리스너
+        findViewById(R.id.button1).setOnClickListener(onClickListener);
+        findViewById(R.id.button2).setOnClickListener(onClickListener);
+        findViewById(R.id.button3).setOnClickListener(onClickListener);
+        findViewById(R.id.button4).setOnClickListener(onClickListener);
     }
 
-    public void onButton1Clicked(MainActivity v) {
-        Intent intent = new Intent(this, item_overview.class);
+    // onClickListener 정의
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.button1:
+                    gotoActivity(disclosure.class);
+                    break;
+                case R.id.button2:
+                    gotoActivity(item_overview.class);
+                    break;
+                case R.id.button3:
+                    gotoActivity(prediction.class);
+                    break;
+                case R.id.button4:
+                    gotoActivity(notification.class);
+                    break;
+            }
+        }
+    };
+
+    // intent Acitivity 정의
+    private void gotoActivity(Class c) {
+        Intent intent = new Intent(MainActivity.this, c);
         startActivity(intent);
     }
-    public void onButton2Clicked(View v) {
-        Intent intent2 = new Intent(this, disclosure.class);
-        startActivity(intent2);
-    }
-    public void onButton3Clicked(View v) {
-        Intent intent3 = new Intent(this, item_overview.class);
-        startActivity(intent3);
-    }
-    public void onButton4Clicked(View v) {
-        Intent intent4 = new Intent(this, prediction.class);
-        startActivity(intent4);
-    }
-    public static class FragmentBottom extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.notification, null);
-        }
-    }
-
 
     @Override
     public void onStart() {
