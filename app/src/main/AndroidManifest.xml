@@ -12,6 +12,7 @@
         <activity android:name=".disclosure" />
         <activity android:name=".prediction" />
         <activity android:name=".item_overview" />
+        <activity android:name=".notification" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
