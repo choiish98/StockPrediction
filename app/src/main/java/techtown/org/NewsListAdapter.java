@@ -55,7 +55,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     public void onBindViewHolder(NewsListAdapter.ViewHolder holder, int position) {
         String title = mData[position].getTitle();
         String summary = mData[position].getSummary();
-        Log.e("summary", summary);
         String date = mData[position].getDate();
         String news = mData[position].getNews();
         String img = mData[position].getImg();
