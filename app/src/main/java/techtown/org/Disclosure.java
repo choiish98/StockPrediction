@@ -21,24 +21,66 @@ public class Disclosure extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disclosure);
 
-        // rest api 통신
-        RestAPITask restAPITask = new RestAPITask("http://78834cb91eae.ngrok.io/stocks/api/news/list");
-        restAPITask.execute();
+        // 뉴스 리스트 객체 및 변수 선언
+        News[] newsClass;
+        String title = "[마켓뷰] 코스피, 미국 증시 훈풍 속 역대 최고가 경신";
+        String summary = null;
+        String press = null;
+        String wdate = null;
+        String link = null;
+        int index = 0;
 
-        // 리사이클러뷰에 표시할 데이터 리스트 생성.
-        News[] news = new News[10];
-        for(int i = 0; i < news.length; i++) {
-            news[i] = new News("안녕", "나는 안드로이드 개발자 최승혁이야", "2021-05-09",
-                    "대한일보", "어떤이미지의경로...");
+        try {
+            // rest api 통신
+            String newsList = new RestAPITask("http://1347d991e951.ngrok.io/stocks/api/news/list").execute().get();
+
+            String[] news = newsList.split("\\},");
+            newsClass = new News[news.length];
+            for(String st : news) {
+                newsClass[index] = new News();
+                String[] newsId = st.split("\",");
+                for (String item : newsId) {
+                    item = item.replace("\"", "");
+                    item = item.replace("\\{", "");
+                    item = item.replace("\\}", "");
+                    String[] newsItem = item.split(":");
+                    if (newsItem[0].equals("{title")) {
+                        title = newsItem[1];
+                        newsClass[index].setTitle(title);
+                        Log.e("title", title);
+                    } else if (newsItem[0].equals("summary")) {
+                        summary = newsItem[1];
+                        newsClass[index].setSummary(summary);
+                        Log.e("summary", summary);
+                    } else if (newsItem[0].equals("press")) {
+                        press = newsItem[1];
+                        newsClass[index].setNews(press);
+                        Log.e("press", press);
+                    } else if (newsItem[0].equals("wdate")) {
+                        wdate = newsItem[1];
+                        newsClass[index].setDate(wdate);
+                        Log.e("wdate", wdate);
+                    } else if (newsItem[0].equals("link")) {
+                        link = newsItem[1];
+                        newsClass[index++].setImg(link);
+                        Log.e("link", link);
+                    }
+                }
+            }
+
+            for(int i = 0; i < newsClass.length; i++)
+                System.out.println(newsClass[i]);
+
+            // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+            RecyclerView recyclerView = findViewById(R.id.recyclerView);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+            // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+            NewsListAdapter adapter = new NewsListAdapter(newsClass);
+            recyclerView.setAdapter(adapter);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-        NewsListAdapter adapter = new NewsListAdapter(news);
-        recyclerView.setAdapter(adapter);
     }
 
     // 백그라운드 동작을 위한 asyncTask
@@ -54,7 +96,6 @@ public class Disclosure extends AppCompatActivity {
         // Background work
         protected String doInBackground(Integer... params) {
             String result = null;
-
             try {
                 // Open the connection
                 URL url = new URL(mURL);
@@ -72,7 +113,6 @@ public class Disclosure extends AppCompatActivity {
 
                 // Set the result
                 result = builder.toString();
-                Log.e("result: ", result);
                 return result;
             }
             catch (Exception e) {

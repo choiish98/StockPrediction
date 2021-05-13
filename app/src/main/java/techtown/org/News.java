@@ -15,6 +15,14 @@ public class News {
         this.img = img;
     }
 
+    News() {
+        this.title = null;
+        this.summary = null;
+        this.date = null;
+        this.news = null;
+        this.img = null;
+    }
+
     public void setTitle(String title) { this.title = title; }
     public String getTitle() {
         return this.title;
