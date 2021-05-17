@@ -44,7 +44,7 @@ public class SearchAdapter extends BaseAdapter {
             convertView = inflate.inflate(R.layout.predictionlist_item,null);
 
             viewHolder = new ViewHolder();
-            viewHolder.label = (TextView) convertView.findViewById(R.id.overview_label);
+            viewHolder.label = (TextView) convertView.findViewById(R.id.label);
 
             convertView.setTag(viewHolder);
         }else{

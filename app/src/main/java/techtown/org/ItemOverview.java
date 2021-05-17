@@ -3,11 +3,16 @@ package techtown.org;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -22,6 +27,11 @@ import static android.graphics.Color.rgb;
 public class ItemOverview extends AppCompatActivity {
 
     private LineChart mChart;
+    RecyclerView recyclerView;
+    EditText editText;
+    ItemAdapter adapter;
+
+    ArrayList<String> items = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +84,35 @@ public class ItemOverview extends AppCompatActivity {
         mChart.setData(data);
         // 곡선 그래프
 
-        // fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        recyclerView = (RecyclerView)findViewById(R.id.recylcerview);
+        editText = (EditText)findViewById(R.id.edittext);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        ItemFragment fragment = new ItemFragment();
-        fragmentTransaction.add(R.id.overview_frame, fragment);
-        fragmentTransaction.commit();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        items.add("Google");
+        items.add("FaceBook");
+        items.add("Amazon");
+        items.add("MicroSoft");
+        items.add("Apple");
+        items.add("Tesla");
+
+        adapter = new ItemAdapter(getApplicationContext(), items);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
 
         // 클릭 리스너
         findViewById(R.id.go_home).setOnClickListener(onClickListener);

@@ -1,62 +1,85 @@
 package techtown.org;
 
 import android.content.Context;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
-import java.util.List;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class ItemAdapter extends BaseAdapter {
+import java.util.ArrayList;
 
-    private Context context;
-    private List<String> list;
-    private LayoutInflater inflate;
-    private ViewHolder viewHolder;
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> implements Filterable {
 
+    Context context;
+    ArrayList<String> unFilteredlist;
+    ArrayList<String> filteredList;
 
-    public ItemAdapter(List<String> list, Context context){
-        this.list = list;
+    public ItemAdapter(Context context, ArrayList<String> list) {
+        super();
         this.context = context;
-        this.inflate = LayoutInflater.from(context);
+        this.unFilteredlist = list;
+        this.filteredList = list;
     }
 
     @Override
-    public int getCount() {
-        return list.size();
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.overview_item, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        holder.textView.setText(filteredList.get(position));
     }
 
     @Override
-    public long getItemId(int i) {
-        return 0;
+    public int getItemCount() {
+        return filteredList.size();
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null){
-            convertView = inflate.inflate(R.layout.overview_item,null);
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
-            viewHolder = new ViewHolder();
-            viewHolder.label = (TextView) convertView.findViewById(R.id.label);
+        TextView textView;
 
-            convertView.setTag(viewHolder);
-        }else{
-            viewHolder = (ViewHolder)convertView.getTag();
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            textView = (TextView)itemView.findViewById(R.id.textview);
         }
-
-        viewHolder.label.setText(list.get(position));
-
-        return convertView;
     }
 
-    class ViewHolder{
-        public TextView label;
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if(charString.isEmpty()) {
+                    filteredList = unFilteredlist;
+                } else {
+                    ArrayList<String> filteringList = new ArrayList<>();
+                    for(String name : unFilteredlist) {
+                        if(name.toLowerCase().contains(charString.toLowerCase())) {
+                            filteringList.add(name);
+                        }
+                    }
+                    filteredList = filteringList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredList = (ArrayList<String>)results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
+
 }
