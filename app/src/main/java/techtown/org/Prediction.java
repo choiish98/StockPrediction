@@ -2,6 +2,7 @@ package techtown.org;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -83,6 +84,38 @@ public class Prediction extends AppCompatActivity {
         SearchFragment fragment = new SearchFragment();
         fragmentTransaction.add(R.id.prediction_frame, fragment);
         fragmentTransaction.commit();
+
+        // 클릭 리스너
+        findViewById(R.id.go_home).setOnClickListener(onClickListener);
+        findViewById(R.id.go_notification).setOnClickListener(onClickListener);
+        findViewById(R.id.go_overview).setOnClickListener(onClickListener);
+        findViewById(R.id.go_disclosure).setOnClickListener(onClickListener);
     }
 
+    // onClickListener 정의
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.go_home:
+                    gotoActivity(MainActivity.class);
+                    break;
+                case R.id.go_overview:
+                    gotoActivity(Item_overview.class);
+                    break;
+                case R.id.go_notification:
+                    gotoActivity(Notification.class);
+                    break;
+                case R.id.go_disclosure:
+                    gotoActivity(Disclosure.class);
+                    break;
+            }
+        }
+    };
+
+    // intent Acitivity 정의
+    private void gotoActivity(Class c) {
+        Intent intent = new Intent(Prediction.this, c);
+        startActivity(intent);
+    }
 }

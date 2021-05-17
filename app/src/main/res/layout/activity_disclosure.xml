@@ -1,62 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Disclosure">
+    tools:context=".Disclosure"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="373dp"
-        android:layout_height="210dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.421"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.149" />
+        <Button
+            android:id="@+id/go_home"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:text="홈"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/button"></Button>
+        <Button
+            android:id="@+id/go_predict"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:text="예측"
+            android:background="@drawable/button"></Button>
+        <Button
+            android:id="@+id/go_overview"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:text="종목 개요"
+            android:background="@drawable/button"></Button>
+        <Button
+            android:id="@+id/go_notification"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="랭킹"
+            android:background="@drawable/button"></Button>
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="공지"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.442" />
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp">
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="49dp"
-        android:layout_height="37dp"
-        android:text="뉴스"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="뉴스"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_marginBottom="10dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="377dp"
-        android:layout_height="229dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.699" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="373dp"
+            android:layout_height="210dp"
+            android:layout_marginBottom="20dp"/>
 
-    //Prepare to link
 
-    //Prepare to link
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="공시"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_marginBottom="10dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="377dp"
+            android:layout_height="229dp"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
+
+</LinearLayout>

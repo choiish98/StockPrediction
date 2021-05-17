@@ -1,8 +1,10 @@
 package techtown.org;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +34,7 @@ public class Disclosure extends AppCompatActivity {
 
         try {
             // rest api 통신
-            String newsList = new RestAPITask("http://1347d991e951.ngrok.io/stocks/api/news/list").execute().get();
+            String newsList = new RestAPITask("http://1ad1946bd7c4.ngrok.io/stocks/api/news/list").execute().get();
 
             String[] news = newsList.split("\\},");
             newsClass = new News[news.length];
@@ -81,6 +83,12 @@ public class Disclosure extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // 클릭 리스너
+        findViewById(R.id.go_home).setOnClickListener(onClickListener);
+        findViewById(R.id.go_notification).setOnClickListener(onClickListener);
+        findViewById(R.id.go_overview).setOnClickListener(onClickListener);
+        findViewById(R.id.go_predict).setOnClickListener(onClickListener);
     }
 
     // 백그라운드 동작을 위한 asyncTask
@@ -123,4 +131,32 @@ public class Disclosure extends AppCompatActivity {
             }
         }
     }
+
+    // onClickListener 정의
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.go_home:
+                    gotoActivity(MainActivity.class);
+                    break;
+                case R.id.go_overview:
+                    gotoActivity(Item_overview.class);
+                    break;
+                case R.id.go_notification:
+                    gotoActivity(Notification.class);
+                    break;
+                case R.id.go_predict:
+                    gotoActivity(Prediction.class);
+                    break;
+            }
+        }
+    };
+
+    // intent Acitivity 정의
+    private void gotoActivity(Class c) {
+        Intent intent = new Intent(Disclosure.this, c);
+        startActivity(intent);
+    }
+
 }
