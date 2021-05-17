@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class searchFragment extends Fragment {
+public class SearchFragment extends Fragment {
     ImageButton btn_back;
     List<String> list;
     ListView listView;
@@ -35,12 +35,12 @@ public class searchFragment extends Fragment {
 
 
 
-    public searchFragment(){
+    public SearchFragment(){
         // Required empty public constructor
     }
 
-    public static searchFragment newInstance(){
-        searchFragment fragment = new searchFragment();
+    public static SearchFragment newInstance(){
+        SearchFragment fragment = new SearchFragment();
         return fragment;
     }
 
@@ -51,7 +51,7 @@ public class searchFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_prediction, container, false);
+        View v = inflater.inflate(R.layout.prediction_fragment, container, false);
         editSearch = (EditText) v.findViewById(R.id.search);
         listView = (ListView) v.findViewById(R.id.listView);
         list = new ArrayList<String>();

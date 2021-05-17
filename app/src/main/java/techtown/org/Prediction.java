@@ -7,136 +7,82 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.util.ArrayList;
+
+import static android.graphics.Color.rgb;
+
 public class Prediction extends AppCompatActivity {
 
-    private LineChart chart;
-    private View view;
+    private LineChart mChart;
 
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prediction);
 
-        //https://ddangeun.tistory.com/52
-        //real time chart
-        chart = (LineChart) view.findViewById(R.id.LineChart);
-        chart.setDrawGridBackground(true);
-        chart.setBackgroundColor(android.R.color.black);
-        chart.setGridBackgroundColor(android.R.color.black);
+        // 곡선 그래프
+        mChart = (LineChart) findViewById(R.id.prediction_lineChart);
 
-// description text
-        chart.getDescription().setEnabled(true);
-        Description des = chart.getDescription();
-        des.setEnabled(true);
-        des.setText("Real-Time DATA");
-        des.setTextSize(15f);
-        des.setTextColor(android.R.color.white);
+        //mChart.setOnChartGestureListener(MainActivity.this);
+        //mChart.setOnChartValueSelectedListener(MainActivity.this);
 
-// touch gestures (false-비활성화)
-        chart.setTouchEnabled(false);
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(false);
+        mChart.setDrawGridBackground(false);
+        mChart.getXAxis().setDrawLabels(false);
+        mChart.getAxisLeft().setDrawLabels(false);
+        mChart.getAxisRight().setDrawLabels(false);
+        mChart.getXAxis().setDrawGridLines(false);
+        mChart.getAxisRight().setDrawGridLines(false);
+        mChart.getAxisLeft().setDrawGridLines(false);
 
-// scaling and dragging (false-비활성화)
-        chart.setDragEnabled(false);
-        chart.setScaleEnabled(false);
+        ArrayList<Entry> yValues = new ArrayList<>();
 
-//auto scale
-        chart.setAutoScaleMinMaxEnabled(true);
+        yValues.add(new Entry(0, 20f));
+        yValues.add(new Entry(1, 35f));
+        yValues.add(new Entry(2, 46f));
+        yValues.add(new Entry(3, 50f));
+        yValues.add(new Entry(4, 10f));
+        yValues.add(new Entry(5, 60f));
+        yValues.add(new Entry(6, 30f));
 
-// if disabled, scaling can be done on x- and y-axis separately
-        chart.setPinchZoom(false);
+        LineDataSet set1 = new LineDataSet(yValues, "Data set 1");
 
-//X축
-        chart.getXAxis().setDrawGridLines(true);
-        chart.getXAxis().setDrawAxisLine(false);
-
-        chart.getXAxis().setEnabled(true);
-        chart.getXAxis().setDrawGridLines(false);
-
-//Legend
-        Legend l = chart.getLegend();
-        l.setEnabled(true);
-        l.setFormSize(10f); // set the size of the legend forms/shapes
-        l.setTextSize(12f);
-        l.setTextColor(android.R.color.white);
-
-//Y축
-        YAxis leftAxis = chart.getAxisLeft();
-        leftAxis.setEnabled(true);
-        leftAxis.setTextColor(getResources().getColor(android.R.color.holo_blue_bright));
-        leftAxis.setDrawGridLines(true);
-        leftAxis.setGridColor(getResources().getColor(android.R.color.holo_blue_bright));
-
-        YAxis rightAxis = chart.getAxisRight();
-        rightAxis.setEnabled(false);
+        set1.setFillAlpha(110);
+        set1.setColor(rgb(150, 31, 47));
+        set1.setLineWidth(2f);
+        set1.setCircleColor(rgb(150, 31, 47));
+        set1.setFillColor(rgb(150, 31, 47));
+        set1.setDrawHighlightIndicators(false);
+        set1.setDrawValues(false);
+        set1.setValueTextColor(Color.WHITE);
 
 
-// don't forget to refresh the drawing
-        chart.invalidate();
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
 
-        /*runOnUiThread(new Runnable() {
-            public void run() {
-                //Operate real time chart
-                addEntry(datanum);
-            }
-        });*/
-    }
-    private void addEntry(double num) {
+        LineData data = new LineData(dataSets);
 
-        LineData data = chart.getData();
-
-        if (data == null) {
-            data = new LineData();
-            chart.setData(data);
-        }
-
-        ILineDataSet set = data.getDataSetByIndex(0);
-        // set.addEntry(...); // can be called as well
-
-        if (set == null) {
-            set = createSet();
-            data.addDataSet(set);
-        }
+        mChart.setData(data);
+        // 곡선 그래프
 
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        data.addEntry(new Entry((float)set.getEntryCount(), (float)num), 0);
-        data.notifyDataChanged();
-
-        // let the chart know it's data has changed
-        chart.notifyDataSetChanged();
-
-        chart.setVisibleXRangeMaximum(150);
-        // this automatically refreshes the chart (calls invalidate())
-        chart.moveViewTo(data.getEntryCount(), 50f, YAxis.AxisDependency.LEFT);
-
-    }
-
-    private LineDataSet createSet() {
-
-
-
-        LineDataSet set = new LineDataSet(null, "Real-time Line Data");
-        set.setLineWidth(1f);
-        set.setDrawValues(false);
-        set.setValueTextColor(getResources().getColor(android.R.color.white));
-        set.setColor(getResources().getColor(android.R.color.white));
-        set.setMode(LineDataSet.Mode.LINEAR);
-        set.setDrawCircles(false);
-        set.setHighLightColor(Color.rgb(190, 190, 190));
-
-        return set;
+        SearchFragment fragment = new SearchFragment();
+        fragmentTransaction.add(R.id.prediction_frame, fragment);
+        fragmentTransaction.commit();
     }
 
 }
