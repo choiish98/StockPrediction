@@ -76,10 +76,24 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:layout_marginBottom="10dp"/>
 
-                <EditText
-                    android:id="@+id/edittext"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="44dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/ic_rectangle">
+
+                    <EditText
+                        android:id="@+id/edittext"
+                        android:layout_width="305dp"
+                        android:layout_height="43dp"
+                        android:hint="종목 검색"/>
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        app:srcCompat="?android:attr/actionModeWebSearchDrawable"
+                        tools:targetApi="lollipop" />
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recylcerview"
@@ -102,6 +116,166 @@
                     android:text="종합 정보"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:layout_marginBottom="10dp"/>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="*"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/table_outside">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
+                            android:text="시가"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
+                            android:text="외국인 비율"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
+                            android:text="저가"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
+                            android:text="대응가"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
+                            android:text="고가"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
+                            android:text="PER"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
+                            android:text="시가총액"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
+                            android:text="52주 최고"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                    </TableRow>
+
+                </TableLayout>
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:layout_width="300dp"

@@ -48,7 +48,6 @@ public class ItemOverview extends AppCompatActivity {
         mChart.setScaleEnabled(false);
         mChart.setDrawGridBackground(false);
         mChart.getXAxis().setDrawLabels(false);
-        mChart.getAxisLeft().setDrawLabels(false);
         mChart.getAxisRight().setDrawLabels(false);
         mChart.getXAxis().setDrawGridLines(false);
         mChart.getAxisRight().setDrawGridLines(false);
