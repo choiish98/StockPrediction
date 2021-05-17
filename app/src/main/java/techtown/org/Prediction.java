@@ -1,7 +1,6 @@
 package techtown.org;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -100,7 +99,7 @@ public class Prediction extends AppCompatActivity {
                     gotoActivity(MainActivity.class);
                     break;
                 case R.id.go_overview:
-                    gotoActivity(Item_overview.class);
+                    gotoActivity(ItemOverview.class);
                     break;
                 case R.id.go_notification:
                     gotoActivity(Notification.class);

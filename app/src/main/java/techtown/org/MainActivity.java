@@ -2,17 +2,12 @@ package techtown.org;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
     TextView textView, textView2, textView3, textView4;
@@ -52,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     gotoActivity(Disclosure.class);
                     break;
                 case R.id.button2:
-                    gotoActivity(Item_overview.class);
+                    gotoActivity(ItemOverview.class);
                     break;
                 case R.id.button3:
                     gotoActivity(Prediction.class);

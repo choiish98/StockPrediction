@@ -1,6 +1,5 @@
 package techtown.org;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,15 +14,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
 
 import static android.graphics.Color.rgb;
 
-public class Item_overview extends AppCompatActivity {
+public class ItemOverview extends AppCompatActivity {
 
     private LineChart mChart;
 
@@ -116,7 +112,7 @@ public class Item_overview extends AppCompatActivity {
 
     // intent Acitivity 정의
     private void gotoActivity(Class c) {
-        Intent intent = new Intent(Item_overview.this, c);
+        Intent intent = new Intent(ItemOverview.this, c);
         startActivity(intent);
     }
 }

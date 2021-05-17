@@ -141,7 +141,7 @@ public class Disclosure extends AppCompatActivity {
                     gotoActivity(MainActivity.class);
                     break;
                 case R.id.go_overview:
-                    gotoActivity(Item_overview.class);
+                    gotoActivity(ItemOverview.class);
                     break;
                 case R.id.go_notification:
                     gotoActivity(Notification.class);

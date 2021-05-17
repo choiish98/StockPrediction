@@ -29,7 +29,7 @@ public class Notification extends AppCompatActivity {
                     gotoActivity(MainActivity.class);
                     break;
                 case R.id.go_overview:
-                    gotoActivity(Item_overview.class);
+                    gotoActivity(ItemOverview.class);
                     break;
                 case R.id.go_disclosure:
                     gotoActivity(Disclosure.class);
