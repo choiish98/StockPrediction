@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -75,6 +77,14 @@ public class Item_overview extends AppCompatActivity {
 
         mChart.setData(data);
         // 곡선 그래프
+
+        // fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        ItemFragment fragment = new ItemFragment();
+        fragmentTransaction.add(R.id.overview_frame, fragment);
+        fragmentTransaction.commit();
 
         // 클릭 리스너
         findViewById(R.id.go_home).setOnClickListener(onClickListener);

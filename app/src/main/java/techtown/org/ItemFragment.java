@@ -23,21 +23,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class SearchFragment extends Fragment {
+public class ItemFragment extends Fragment {
     List<String> list;
     ListView listView;
     EditText editSearch;
-    SearchAdapter adapter;
+    ItemAdapter adapter;
     ArrayList<String> arraylist;
 
-
-
-    public SearchFragment(){
+    public ItemFragment(){
         // Required empty public constructor
     }
 
-    public static SearchFragment newInstance(){
-        SearchFragment fragment = new SearchFragment();
+    public static ItemFragment newInstance(){
+        ItemFragment fragment = new ItemFragment();
         return fragment;
     }
 
@@ -48,9 +46,9 @@ public class SearchFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.prediction_fragment, container, false);
-        editSearch = (EditText) v.findViewById(R.id.search);
-        listView = (ListView) v.findViewById(R.id.listView);
+        View v = inflater.inflate(R.layout.overview_fragment, container, false);
+        editSearch = (EditText) v.findViewById(R.id.item_search);
+        listView = (ListView) v.findViewById(R.id.item_listView);
         list = new ArrayList<String>();
 
         settingList();
@@ -59,7 +57,7 @@ public class SearchFragment extends Fragment {
         arraylist.addAll(list);
         list.clear();
 
-        adapter = new SearchAdapter(list, container.getContext());
+        adapter = new ItemAdapter(list, container.getContext());
 
         listView.setAdapter(adapter);
 
@@ -86,20 +84,15 @@ public class SearchFragment extends Fragment {
             @SuppressLint("ClickableViewAccessibility")
             @Override public boolean onTouch(View v, MotionEvent event)
             {
-
                 listView.setVisibility(View.VISIBLE);
-
                 return false;
-
             }
         });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Toast.makeText(container.getContext() ,"성공성공성공", Toast.LENGTH_LONG).show();
-
             }
         });
 
@@ -136,7 +129,5 @@ public class SearchFragment extends Fragment {
         list.add("asdfghjkdfsfa");
         list.add("asdf5");
         list.add("asdf6");
-
     }
 }
-

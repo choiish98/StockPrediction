@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class SearchAdapter extends BaseAdapter {
+public class ItemAdapter extends BaseAdapter {
 
     private Context context;
     private List<String> list;
@@ -17,7 +17,7 @@ public class SearchAdapter extends BaseAdapter {
     private ViewHolder viewHolder;
 
 
-    public SearchAdapter(List<String> list, Context context){
+    public ItemAdapter(List<String> list, Context context){
         this.list = list;
         this.context = context;
         this.inflate = LayoutInflater.from(context);
@@ -41,10 +41,10 @@ public class SearchAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
-            convertView = inflate.inflate(R.layout.predictionlist_item,null);
+            convertView = inflate.inflate(R.layout.overview_item,null);
 
             viewHolder = new ViewHolder();
-            viewHolder.label = (TextView) convertView.findViewById(R.id.overview_label);
+            viewHolder.label = (TextView) convertView.findViewById(R.id.label);
 
             convertView.setTag(viewHolder);
         }else{

@@ -77,7 +77,6 @@ public class Prediction extends AppCompatActivity {
         mChart.setData(data);
         // 곡선 그래프
 
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 

@@ -1,7 +1,6 @@
 package techtown.org;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
-        View view = inflater.inflate(R.layout.item_newlist, parent, false);
+        View view = inflater.inflate(R.layout.newslist_item, parent, false);
         NewsListAdapter.ViewHolder vh = new NewsListAdapter.ViewHolder(view);
 
         return vh;
