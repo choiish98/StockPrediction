@@ -1,17 +1,37 @@
 package techtown.org;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.kakao.auth.AuthType;
+import com.kakao.auth.Session;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
     TextView textView, textView2, textView3, textView4;
     Animation flowAnim, flowAnim2, alphaAnim, alphaAnim2;
+
+    private SessionCallback sessionCallback = new SessionCallback();
+    Session session;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         textView2 = (TextView) findViewById(R.id.textView2);
         textView3 = (TextView) findViewById(R.id.textView3);
         textView4 = (TextView) findViewById(R.id.textView4);
+
+        session = Session.getCurrentSession();
+        session.addCallback(sessionCallback);
 
         // 애니메이션
         flowAnim = AnimationUtils.loadAnimation(this, R.anim.flow);
@@ -36,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button2).setOnClickListener(onClickListener);
         findViewById(R.id.button3).setOnClickListener(onClickListener);
         findViewById(R.id.button4).setOnClickListener(onClickListener);
+
+        findViewById(R.id.login).setOnClickListener(onClickListener);
+        findViewById(R.id.logout).setOnClickListener(onClickListener);
     }
 
     // onClickListener 정의
@@ -55,6 +81,17 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.button4:
                     gotoActivity(Notification.class);
                     break;
+                case R.id.login:
+                    session.open(AuthType.KAKAO_LOGIN_ALL, MainActivity.this);
+                    break;
+                case R.id.logout:
+                    UserManagement.getInstance()
+                            .requestLogout(new LogoutResponseCallback() {
+                                @Override
+                                public void onCompleteLogout() {
+                                    Toast.makeText(MainActivity.this, "log out", Toast.LENGTH_SHORT).show();
+                                }
+                            });
             }
         }
     };
@@ -72,5 +109,23 @@ public class MainActivity extends AppCompatActivity {
         textView2.startAnimation(alphaAnim);
         textView3.startAnimation(flowAnim2);
         textView4.startAnimation(alphaAnim2);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // 세션 콜백 삭제
+        Session.getCurrentSession().removeCallback(sessionCallback);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // 카카오톡|스토리 간편로그인 실행 결과를 받아서 SDK로 전달
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
