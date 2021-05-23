@@ -34,7 +34,7 @@ public class Disclosure extends AppCompatActivity {
 
         try {
             // rest api 통신
-            String newsList = new RestAPITask("http://1ad1946bd7c4.ngrok.io/stocks/api/news/list").execute().get();
+            String newsList = new RestAPITask("http://b0c2d8a7a91c.ngrok.io/stocks/api/news/list").execute().get();
 
             String[] news = newsList.split("\\},");
             newsClass = new News[news.length];

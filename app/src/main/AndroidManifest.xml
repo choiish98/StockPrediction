@@ -16,7 +16,8 @@
         <activity android:name=".ItemOverview"
                   android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Notification" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
