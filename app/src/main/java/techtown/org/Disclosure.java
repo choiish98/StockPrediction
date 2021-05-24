@@ -23,6 +23,9 @@ public class Disclosure extends AppCompatActivity {
 
     // 뉴스 리스트 객체 및 변수 선언
     News[] newsClass;
+    News[] gongsiClass;
+    int newsIndex = 0;
+    int gongsiIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +36,30 @@ public class Disclosure extends AppCompatActivity {
             // rest api 통신
             String newsList = new RestAPITask("http://000b227aab5e.ngrok.io/stocks/api/news/list").execute().get();
             JSONArray jsonArray = new JSONArray(newsList);
-            Log.e("json", jsonArray.toString());
 
             newsClass = new News[jsonArray.length()];
+            gongsiClass = new News[jsonArray.length()];
             for(int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                newsClass[i] = new News();
-                newsClass[i].setTitle(jsonObject.optString("title"));
-                newsClass[i].setSummary(jsonObject.optString("summary"));
-                newsClass[i].setPress(jsonObject.optString("press"));
-                newsClass[i].setDate(jsonObject.optString("wdate"));
-                newsClass[i].setImg(jsonObject.optString("thumbnail_link"));
-                newsClass[i].setLink(jsonObject.optString("link"));
+                if(jsonObject.optString("category").equals("news")) {
+                    newsClass[newsIndex] = new News();
+                    newsClass[newsIndex].setTitle(jsonObject.optString("title"));
+                    newsClass[newsIndex].setSummary(jsonObject.optString("summary"));
+                    newsClass[newsIndex].setPress(jsonObject.optString("press"));
+                    newsClass[newsIndex].setDate(jsonObject.optString("wdate"));
+                    newsClass[newsIndex].setImg(jsonObject.optString("thumbnail_link"));
+                    newsClass[newsIndex].setLink(jsonObject.optString("link"));
+                    newsIndex++;
+                }
+                if(jsonObject.optString("category").equals("gongsi")) {
+                    gongsiClass[gongsiIndex] = new News();
+                    gongsiClass[gongsiIndex].setTitle(jsonObject.optString("title"));
+                    gongsiClass[gongsiIndex].setSummary(jsonObject.optString("summary"));
+                    gongsiClass[gongsiIndex].setPress(jsonObject.optString("press"));
+                    gongsiClass[gongsiIndex].setDate(jsonObject.optString("wdate"));
+                    gongsiClass[gongsiIndex].setLink(jsonObject.optString("link"));
+                    gongsiIndex++;
+                }
             }
 
             // 리사이클러뷰에 LinearLayoutManager 객체 지정.
@@ -54,6 +69,15 @@ public class Disclosure extends AppCompatActivity {
             // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
             NewsListAdapter adapter = new NewsListAdapter(newsClass);
             recyclerView.setAdapter(adapter);
+
+            // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+            RecyclerView recyclerView2 = findViewById(R.id.recyclerView2);
+            recyclerView2.setLayoutManager(new LinearLayoutManager(this));
+
+            // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+            Log.e("gonsi: ", gongsiClass[1].getTitle());
+            GongsiAdapter adapter2 = new GongsiAdapter(gongsiClass);
+            recyclerView2.setAdapter(adapter2);
         } catch (Exception e) {
             e.printStackTrace();
         }

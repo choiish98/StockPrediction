@@ -80,8 +80,9 @@
             android:layout_marginBottom="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView2"
             android:layout_width="377dp"
-            android:layout_height="229dp"
+            android:layout_height="210dp"
             android:layout_marginBottom="20dp"/>
     </LinearLayout>
 
