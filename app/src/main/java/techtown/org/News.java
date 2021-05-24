@@ -1,26 +1,31 @@
 package techtown.org;
 
+import android.graphics.BitmapFactory;
+
 public class News {
     String title;
     String summary;
     String date;
-    String news;
+    String press;
     String img;
+    String link;
 
-    News(String title, String summary, String date, String news, String img) {
+    News(String title, String summary, String date, String press, String img, String link) {
         this.title = title;
         this.summary = summary;
         this.date = date;
-        this.news = news;
+        this.press = press;
         this.img = img;
+        this.link = link;
     }
 
     News() {
         this.title = null;
         this.summary = null;
         this.date = null;
-        this.news = null;
+        this.press = null;
         this.img = null;
+        this.link = null;
     }
 
     public void setTitle(String title) { this.title = title; }
@@ -39,12 +44,14 @@ public class News {
     public String getDate() {
         return this.date;
     }
-    public void setNews(String date) { this.date = date; }
-    public String getNews() { return this.date; }
+    public void setPress(String press) { this.press = press; }
+    public String getPress() { return this.press; }
     public void setImg(String img) { this.img = img; }
     public String getImg() { return this.img; }
+    public void setLink(String link) { this.link = link; }
+    public String getLink() { return this.link; }
 
     public int size() {
-        return 10;
+        return 5;
     }
 }

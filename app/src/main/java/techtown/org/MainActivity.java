@@ -17,8 +17,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kakao.auth.ApiResponseCallback;
+import com.kakao.auth.AuthService;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.Session;
+import com.kakao.auth.network.response.AccessTokenInfoResponse;
+import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
@@ -29,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     TextView textView, textView2, textView3, textView4;
     Animation flowAnim, flowAnim2, alphaAnim, alphaAnim2;
 
+    private Button login;
+    private Button logout;
     private SessionCallback sessionCallback = new SessionCallback();
     Session session;
 
@@ -44,8 +50,35 @@ public class MainActivity extends AppCompatActivity {
         textView3 = (TextView) findViewById(R.id.textView3);
         textView4 = (TextView) findViewById(R.id.textView4);
 
+        login = (Button) findViewById(R.id.login);
+        logout = (Button) findViewById(R.id.login);
         session = Session.getCurrentSession();
         session.addCallback(sessionCallback);
+
+        // 로그인 성공 유무
+        AuthService.getInstance()
+                .requestAccessTokenInfo(new ApiResponseCallback<AccessTokenInfoResponse>() {
+                    @Override
+                    public void onSessionClosed(ErrorResult errorResult) {
+                        Log.e("KAKAO_API", "session closed" + errorResult);
+                        login.setEnabled(false);
+                        logout.setEnabled(true);
+                        Log.e("KAKAO_API", "session closed2" + errorResult);
+                    }
+
+                    @Override
+                    public void onFailure(ErrorResult errorResult) {
+                        Log.e("KAKAO_API", "Failed" + errorResult);
+                        login.setEnabled(false);
+                        logout.setEnabled(true);
+                    }
+
+                    @Override
+                    public void onSuccess(AccessTokenInfoResponse result) {
+                        login.setEnabled(true);
+                        logout.setEnabled(false);
+                    }
+                });
 
         // 애니메이션
         flowAnim = AnimationUtils.loadAnimation(this, R.anim.flow);
@@ -60,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button3).setOnClickListener(onClickListener);
         findViewById(R.id.button4).setOnClickListener(onClickListener);
 
-        findViewById(R.id.login).setOnClickListener(onClickListener);
-        findViewById(R.id.logout).setOnClickListener(onClickListener);
+        login.setOnClickListener(onClickListener);
+        logout.setOnClickListener(onClickListener);
     }
 
     // onClickListener 정의

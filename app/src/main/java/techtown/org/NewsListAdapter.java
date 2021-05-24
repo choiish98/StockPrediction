@@ -1,12 +1,24 @@
 package techtown.org;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.BufferedInputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder> {
 
@@ -14,21 +26,29 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView imageView2;
+        ImageView img;
         TextView newsTitle;
         TextView newsSummary;
         TextView newsDate;
-        TextView news;
+        TextView press;
 
         ViewHolder(View itemView) {
             super(itemView) ;
 
             // 뷰 객체에 대한 참조. (hold strong reference)
-            imageView2 = itemView.findViewById(R.id.imageView2);
+            img = itemView.findViewById(R.id.img);
             newsTitle = itemView.findViewById(R.id.newsTitle);
             newsSummary = itemView.findViewById(R.id.newsSummary);
             newsDate = itemView.findViewById(R.id.newsDate);
-            news = itemView.findViewById(R.id.news);
+            press = itemView.findViewById(R.id.press);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData[0].getLink()));
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
     }
 
@@ -55,19 +75,62 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         String title = mData[position].getTitle();
         String summary = mData[position].getSummary();
         String date = mData[position].getDate();
-        String news = mData[position].getNews();
-        String img = mData[position].getImg();
+        String press = mData[position].getPress();
+        try {
+            String img = mData[position].getImg();
+            if(img.isEmpty()){
+                Log.e("img:", "isEmpty");
+            } else holder.img.setImageBitmap(new downImgITask(img).execute().get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         holder.newsTitle.setText(title);
         holder.newsSummary.setText(summary);
         holder.newsDate.setText(date);
-        holder.news.setText(news);
-        holder.news.setText(img);
+        holder.press.setText(press);
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.
     @Override
     public int getItemCount() {
         return mData[0].size();
+    }
+
+    // 백그라운드 동작을 위한 asyncTask
+    public static class downImgITask extends AsyncTask<Integer, Void, Bitmap> {
+        // Variable to store url
+        protected String mURL;
+
+        // Constructor
+        public downImgITask(String url) {
+            mURL = url;
+        }
+
+        // Background work
+        protected Bitmap doInBackground(Integer... params) {
+            Bitmap result = null;
+            try {
+                // Open the connection
+                URL url = new URL(mURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.connect();
+
+                int nSize = conn.getContentLength();
+                BufferedInputStream bis = new BufferedInputStream(conn.getInputStream(), nSize);
+
+                // Set the result
+                result = BitmapFactory.decodeStream(bis);
+                return result;
+            }
+            catch (Exception e) {
+                // Error calling the rest api
+                Log.e("REST_API", "GET method failed: " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 }

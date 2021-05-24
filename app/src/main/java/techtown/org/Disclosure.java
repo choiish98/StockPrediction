@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,60 +21,31 @@ import java.net.URL;
 
 public class Disclosure extends AppCompatActivity {
 
+    // 뉴스 리스트 객체 및 변수 선언
+    News[] newsClass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disclosure);
 
-        // 뉴스 리스트 객체 및 변수 선언
-        News[] newsClass;
-        String title = "[마켓뷰] 코스피, 미국 증시 훈풍 속 역대 최고가 경신";
-        String summary = null;
-        String press = null;
-        String wdate = null;
-        String link = null;
-        int index = 0;
-
         try {
             // rest api 통신
-            String newsList = new RestAPITask("http://b0c2d8a7a91c.ngrok.io/stocks/api/news/list").execute().get();
+            String newsList = new RestAPITask("http://000b227aab5e.ngrok.io/stocks/api/news/list").execute().get();
+            JSONArray jsonArray = new JSONArray(newsList);
+            Log.e("json", jsonArray.toString());
 
-            String[] news = newsList.split("\\},");
-            newsClass = new News[news.length];
-            for(String st : news) {
-                newsClass[index] = new News();
-                String[] newsId = st.split("\",");
-                for (String item : newsId) {
-                    item = item.replace("\"", "");
-                    item = item.replace("\\{", "");
-                    item = item.replace("\\}", "");
-                    String[] newsItem = item.split(":");
-                    if (newsItem[0].equals("{title")) {
-                        title = newsItem[1];
-                        newsClass[index].setTitle(title);
-                        Log.e("title", title);
-                    } else if (newsItem[0].equals("summary")) {
-                        summary = newsItem[1];
-                        newsClass[index].setSummary(summary);
-                        Log.e("summary", summary);
-                    } else if (newsItem[0].equals("press")) {
-                        press = newsItem[1];
-                        newsClass[index].setNews(press);
-                        Log.e("press", press);
-                    } else if (newsItem[0].equals("wdate")) {
-                        wdate = newsItem[1];
-                        newsClass[index].setDate(wdate);
-                        Log.e("wdate", wdate);
-                    } else if (newsItem[0].equals("link")) {
-                        link = newsItem[1];
-                        newsClass[index++].setImg(link);
-                        Log.e("link", link);
-                    }
-                }
+            newsClass = new News[jsonArray.length()];
+            for(int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                newsClass[i] = new News();
+                newsClass[i].setTitle(jsonObject.optString("title"));
+                newsClass[i].setSummary(jsonObject.optString("summary"));
+                newsClass[i].setPress(jsonObject.optString("press"));
+                newsClass[i].setDate(jsonObject.optString("wdate"));
+                newsClass[i].setImg(jsonObject.optString("thumbnail_link"));
+                newsClass[i].setLink(jsonObject.optString("link"));
             }
-
-            for(int i = 0; i < newsClass.length; i++)
-                System.out.println(newsClass[i]);
 
             // 리사이클러뷰에 LinearLayoutManager 객체 지정.
             RecyclerView recyclerView = findViewById(R.id.recyclerView);
