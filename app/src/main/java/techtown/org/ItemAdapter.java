@@ -4,6 +4,8 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,17 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> implements Filterable {
 
@@ -51,6 +63,71 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         public MyViewHolder(View itemView) {
             super(itemView);
             textView = (TextView)itemView.findViewById(R.id.textview);
+
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //https://0305cb777388.ngrok.io/stocks/api/related_companies?text=%EC%82%BC%EC%84%B1
+                    // 아이템 추가
+                    String stockList;
+
+                    {
+                        try {
+                            String stock = textView.getText().toString();
+                            String url = "https://0305cb777388.ngrok.io/stocks/api/related_companies?text=";
+                            stockList = new RestAPITask(url.concat(stock)).execute().get();
+                            JSONArray jsonObject = new JSONArray(stockList);
+                            Log.e("stock", jsonObject.toString());
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // 백그라운드 동작을 위한 asyncTask
+    public static class RestAPITask extends AsyncTask<Integer, Void, String> {
+        // Variable to store url
+        protected String mURL;
+
+        // Constructor
+        public RestAPITask(String url) {
+            mURL = url;
+        }
+
+        // Background work
+        protected String doInBackground(Integer... params) {
+            String result = null;
+            try {
+                // Open the connection
+                URL url = new URL(mURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                InputStream is = conn.getInputStream();
+
+                // Get the stream
+                StringBuilder builder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+
+                // Set the result
+                result = builder.toString();
+                return result;
+            } catch (Exception e) {
+                // Error calling the rest api
+                Log.e("REST_API", "GET method failed: " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
         }
     }
 
@@ -83,5 +160,4 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
             }
         };
     }
-
 }
