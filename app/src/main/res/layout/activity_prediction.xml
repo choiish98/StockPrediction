@@ -51,36 +51,67 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/prediction_frame"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_mark"
-                android:gravity="center_vertical"
-                android:text="예측"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                tools:ignore="RtlCompat"
+                android:orientation="vertical"
+                android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp">
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/prediction_lineChart"
-                android:layout_width="357dp"
-                android:layout_height="235dp"
-                android:layout_marginLeft="20dp"/>
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="종목 검색"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/ic_rectangle">
+
+                    <EditText
+                        android:id="@+id/edittext"
+                        android:layout_width="305dp"
+                        android:layout_height="43dp"
+                        android:hint="종목 검색"/>
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        app:srcCompat="?android:attr/actionModeWebSearchDrawable"
+                        tools:targetApi="lollipop" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/searchRecylcerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"></androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:id="@+id/prediction_lineChart"/>
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

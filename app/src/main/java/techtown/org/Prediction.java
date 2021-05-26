@@ -3,12 +3,19 @@ package techtown.org;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -16,13 +23,28 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import static android.graphics.Color.rgb;
 
 public class Prediction extends AppCompatActivity {
 
     private LineChart mChart;
+    RecyclerView recyclerView;
+    EditText editText;
+    PredictionAdapter adapter;
+
+    ArrayList<String> items = new ArrayList<>();
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -32,9 +54,6 @@ public class Prediction extends AppCompatActivity {
 
         // 곡선 그래프
         mChart = (LineChart) findViewById(R.id.prediction_lineChart);
-
-        //mChart.setOnChartGestureListener(MainActivity.this);
-        //mChart.setOnChartValueSelectedListener(MainActivity.this);
 
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(false);
@@ -76,18 +95,94 @@ public class Prediction extends AppCompatActivity {
         mChart.setData(data);
         // 곡선 그래프
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // 종목 검색
+        recyclerView = (RecyclerView)findViewById(R.id.searchRecylcerview);
+        editText = (EditText)findViewById(R.id.edittext);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        SearchFragment fragment = new SearchFragment();
-        fragmentTransaction.add(R.id.prediction_frame, fragment);
-        fragmentTransaction.commit();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        // 아이템 추가
+        try {
+            String stockList = new ItemOverview.RestAPITask("https://0305cb777388.ngrok.io/stocks/api/stocks/list").execute().get();
+            JSONArray jsonArray = new JSONArray(stockList);
+
+            for(int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String a = jsonObject.optString("company_name");
+                items.add(a);
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        adapter = new PredictionAdapter(getApplicationContext(), items);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
 
         // 클릭 리스너
         findViewById(R.id.go_home).setOnClickListener(onClickListener);
         findViewById(R.id.go_notification).setOnClickListener(onClickListener);
-        findViewById(R.id.go_overview).setOnClickListener(onClickListener);
         findViewById(R.id.go_disclosure).setOnClickListener(onClickListener);
+        findViewById(R.id.go_disclosure).setOnClickListener(onClickListener);
+    }
+
+    // 백그라운드 동작을 위한 asyncTask
+    public static class RestAPITask extends AsyncTask<Integer, Void, String> {
+        // Variable to store url
+        protected String mURL;
+
+        // Constructor
+        public RestAPITask(String url) {
+            mURL = url;
+        }
+
+        // Background work
+        protected String doInBackground(Integer... params) {
+            String result = null;
+            try {
+                // Open the connection
+                URL url = new URL(mURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                InputStream is = conn.getInputStream();
+
+                // Get the stream
+                StringBuilder builder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+
+                // Set the result
+                result = builder.toString();
+                return result;
+            }
+            catch (Exception e) {
+                // Error calling the rest api
+                Log.e("REST_API", "GET method failed: " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 
     // onClickListener 정의

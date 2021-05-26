@@ -47,7 +47,6 @@ public class ItemOverview extends AppCompatActivity {
     ItemAdapter adapter;
 
     ArrayList<String> items = new ArrayList<>();
-    Map<String, Integer> codes = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,28 +117,16 @@ public class ItemOverview extends AppCompatActivity {
 
             }
         });
-        editText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if(i == KeyEvent.KEYCODE_ENTER) {
-                    Log.e("codes", codes.get(editText.getText()).toString());
-                }
-                return false;
-            }
-        });
 
         // 아이템 추가
-        // http://9b9b9c7b62d9.ngrok.io/stocks/api/stocks/list
         try {
-            String stockList = new RestAPITask("http://9b9b9c7b62d9.ngrok.io/stocks/api/stocks/list").execute().get();
+            String stockList = new RestAPITask("https://0305cb777388.ngrok.io/stocks/api/stocks/list").execute().get();
             JSONArray jsonArray = new JSONArray(stockList);
 
             for(int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String a = jsonObject.optString("company_name");
                 items.add(a);
-                String b = jsonObject.optString("code");
-                codes.put(a, Integer.parseInt(b));
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
