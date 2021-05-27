@@ -45,7 +45,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData[0].getLink()));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData[getAdapterPosition()].getLink()));
                     view.getContext().startActivity(intent);
                 }
             });

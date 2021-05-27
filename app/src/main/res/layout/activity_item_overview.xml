@@ -135,10 +135,91 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/talbe_inside_block"
                             android:gravity="center"
+                            android:text="주가"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/stock_info_big_left_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
+                            android:text="전일대비"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/jeonildaebi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
+                            android:text="거래량"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/georaeryang"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
+                            android:text="거래대금"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/georaedaegeum"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/table_inside"
+                            android:gravity="center"
+                            android:text="text"
+                            android:textSize="18sp" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/talbe_inside_block"
+                            android:gravity="center"
                             android:text="시가"
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/siga"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/table_inside"
@@ -155,6 +236,7 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/foreignper"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/table_inside"
@@ -176,6 +258,7 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/jeoga"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/table_inside"
@@ -192,6 +275,7 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/objectjuga"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/table_inside"
@@ -213,6 +297,7 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/goga"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/table_inside"
@@ -229,6 +314,7 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/pereps"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/table_inside"
@@ -250,6 +336,7 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/sigasum"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/table_inside"
@@ -266,6 +353,7 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/ju52"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/table_inside"

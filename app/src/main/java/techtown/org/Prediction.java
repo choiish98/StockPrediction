@@ -117,7 +117,8 @@ public class Prediction extends AppCompatActivity {
 
         // 아이템 추가
         try {
-            String stockList = new ItemOverview.RestAPITask("https://0305cb777388.ngrok.io/stocks/api/stocks/list").execute().get();
+            String url = new GlobalApplication().getApiURL();
+            String stockList = new ItemOverview.RestAPITask(url.concat("/stocks/api/stocks/list")).execute().get();
             JSONArray jsonArray = new JSONArray(stockList);
 
             for(int i = 0; i < jsonArray.length(); i++) {

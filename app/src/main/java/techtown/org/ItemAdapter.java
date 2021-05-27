@@ -56,6 +56,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         return filteredList.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(View v, String code);
+    }
+
+    private OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener;
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
@@ -67,17 +77,24 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //https://0305cb777388.ngrok.io/stocks/api/related_companies?text=%EC%82%BC%EC%84%B1
+
                     // 아이템 추가
                     String stockList;
-
+                    String info;
                     {
                         try {
+                            // 아이템 클릭 시 종목 코드 받아오기
                             String stock = textView.getText().toString();
-                            String url = "https://0305cb777388.ngrok.io/stocks/api/related_companies?text=";
-                            stockList = new RestAPITask(url.concat(stock)).execute().get();
-                            JSONArray jsonObject = new JSONArray(stockList);
-                            Log.e("stock", jsonObject.toString());
+                            String apiURL = new GlobalApplication().getApiURL();
+                            String url = "/stocks/api/related_companies?text=";
+                            stockList = new RestAPITask(apiURL.concat(url.concat(stock))).execute().get();
+                            JSONObject jsonObject = new JSONObject(stockList);
+                            JSONArray jsonArray = jsonObject.getJSONArray("companies");
+                            JSONObject obj = jsonArray.getJSONObject(0);
+                            String code = obj.getString("code");
+                            if(mListener != null) {
+                                mListener.onItemClick(view, code);
+                            }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -26,6 +27,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -41,6 +43,9 @@ import static android.graphics.Color.rgb;
 
 public class ItemOverview extends AppCompatActivity {
 
+    TextView siga, stock_info_big_left_price, jeonildaebi,
+            georaeryang, georaedaegeum, goga, jeoga, sigasum, foreignper, objectjuga, pereps, ju52;
+
     private LineChart mChart;
     RecyclerView recyclerView;
     EditText editText;
@@ -52,6 +57,20 @@ public class ItemOverview extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_overview);
+
+        // 변수 선언
+        siga = findViewById(R.id.siga);
+        stock_info_big_left_price= findViewById(R.id.stock_info_big_left_price);
+        jeonildaebi = findViewById(R.id.jeonildaebi);
+        georaeryang = findViewById(R.id.georaeryang);
+        georaedaegeum = findViewById(R.id.georaedaegeum);
+        goga = findViewById(R.id.goga);
+        jeoga = findViewById(R.id.jeoga);
+        sigasum = findViewById(R.id.sigasum);
+        foreignper = findViewById(R.id.foreignper);
+        objectjuga = findViewById(R.id.objectjuga);
+        pereps = findViewById(R.id.pereps);
+        ju52 = findViewById(R.id.ju52);;
 
         // 곡선 그래프
         mChart = (LineChart) findViewById(R.id.lineChart);
@@ -120,7 +139,8 @@ public class ItemOverview extends AppCompatActivity {
 
         // 아이템 추가
         try {
-            String stockList = new RestAPITask("https://0305cb777388.ngrok.io/stocks/api/stocks/list").execute().get();
+            String url = new GlobalApplication().getApiURL();
+            String stockList = new RestAPITask(url.concat("/stocks/api/stocks/list")).execute().get();
             JSONArray jsonArray = new JSONArray(stockList);
 
             for(int i = 0; i < jsonArray.length(); i++) {
@@ -139,6 +159,48 @@ public class ItemOverview extends AppCompatActivity {
         adapter = new ItemAdapter(getApplicationContext(), items);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new ItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, String code) {
+                try {
+                    String infoURL = "/stocks/api/stock_suminfo_data?code=";
+                    String apiURL = new GlobalApplication().getApiURL();
+                    String info = new RestAPITask(apiURL.concat(infoURL).concat(code)).execute().get();
+                    JSONObject jsonObject = new JSONObject(info);
+                    String stock_info_big_left_price1 = jsonObject.getString("stock_info_big_left_price");
+                    String jeonildaebi1 = jsonObject.getString("jeonildaebi");
+                    String georaeryang1 = jsonObject.getString("georaeryang");
+                    String georaedaegeum1 = jsonObject.getString("georaedaegeum");
+                    String goga1 = jsonObject.getString("goga");
+                    String jeoga1 = jsonObject.getString("jeoga");
+                    String sigasum1 = jsonObject.getString("sigasum");
+                    String foreignper1 = jsonObject.getString("foreignper");
+                    String objectjuga1 = jsonObject.getString("objectjuga");
+                    String pereps1 = jsonObject.getString("pereps");
+                    String ju521 = jsonObject.getString("ju52");
+                    String infoSiga = jsonObject.getString("siga");
+                    siga.setText(infoSiga);
+                    stock_info_big_left_price.setText(stock_info_big_left_price1);
+                    jeonildaebi.setText(jeonildaebi1);
+                    georaeryang.setText(georaeryang1);
+                    georaedaegeum.setText(georaedaegeum1);
+                    goga.setText(goga1);
+                    jeoga.setText(jeoga1);
+                    sigasum.setText(sigasum1);
+                    foreignper.setText(foreignper1);
+                    objectjuga.setText(objectjuga1);
+                    pereps.setText(pereps1);
+                    ju52.setText(ju521);;
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         // 클릭 리스너
         findViewById(R.id.go_home).setOnClickListener(onClickListener);
