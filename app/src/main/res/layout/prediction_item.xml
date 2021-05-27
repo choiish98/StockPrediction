@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="25dp"
         android:gravity="center_vertical"
+        android:background="?android:attr/selectableItemBackground"
         android:text="TEST"
         android:textSize="20dp" />
 

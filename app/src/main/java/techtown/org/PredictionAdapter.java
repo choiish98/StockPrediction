@@ -13,7 +13,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.MyViewHolder> implements Filterable {
 
@@ -44,6 +49,16 @@ public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.My
         return filteredList.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(View v, String code);
+    }
+
+    private ItemAdapter.OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(ItemAdapter.OnItemClickListener listener) {
+        this.mListener = listener;
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
@@ -51,6 +66,35 @@ public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.My
         public MyViewHolder(View itemView) {
             super(itemView);
             textView = (TextView)itemView.findViewById(R.id.textview);
+
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    {
+                        String stockList;
+                        try {
+                            // 아이템 클릭 시 종목 코드 받아오기
+                            String stock = textView.getText().toString();
+                            String apiURL = new GlobalApplication().getApiURL();
+                            String url = "/stocks/api/related_companies?text=";
+                            stockList = new ItemAdapter.RestAPITask(apiURL.concat(url.concat(stock))).execute().get();
+                            JSONObject jsonObject = new JSONObject(stockList);
+                            JSONArray jsonArray = jsonObject.getJSONArray("companies");
+                            JSONObject obj = jsonArray.getJSONObject(0);
+                            String code = obj.getString("code");
+                            if(mListener != null) {
+                                mListener.onItemClick(view, code);
+                            }
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
         }
     }
 

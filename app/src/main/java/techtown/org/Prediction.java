@@ -138,6 +138,14 @@ public class Prediction extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
 
+        adapter.setOnItemClickListener(new ItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, String code) {
+                // code에 종목 코드 존재
+                // 그래프 구현 필요
+            }
+        });
+
         // 클릭 리스너
         findViewById(R.id.go_home).setOnClickListener(onClickListener);
         findViewById(R.id.go_notification).setOnClickListener(onClickListener);

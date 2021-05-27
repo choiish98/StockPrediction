@@ -80,7 +80,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                     // 아이템 추가
                     String stockList;
-                    String info;
                     {
                         try {
                             // 아이템 클릭 시 종목 코드 받아오기
