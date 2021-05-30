@@ -14,14 +14,10 @@ import com.kakao.auth.KakaoSDK;
 
 public class GlobalApplication extends Application {
     private static GlobalApplication instance;
-    private static String apiURL = "http://f2bd3f92d68e.ngrok.io";
+    private static String apiURL = "http://87fc50980bc9.ngrok.io";
 
     public String getApiURL() {
         return this.apiURL;
-    }
-
-    public void setApiURL(String apiURL) {
-        this.apiURL = apiURL;
     }
 
     public static GlobalApplication getGlobalApplicationContext() {

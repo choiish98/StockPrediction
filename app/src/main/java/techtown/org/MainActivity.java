@@ -44,6 +44,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        session = Session.getCurrentSession();
+        session.addCallback(sessionCallback);
+
+        AuthService.getInstance().requestAccessTokenInfo(new ApiResponseCallback<AccessTokenInfoResponse>() {
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                login.setVisibility(View.VISIBLE);
+                logout.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onSuccess(AccessTokenInfoResponse result) {
+                login.setVisibility(View.INVISIBLE);
+                logout.setVisibility(View.VISIBLE);
+            }
+        });
+
         // 변수 선언
         textView = (TextView) findViewById(R.id.textView);
         textView2 = (TextView) findViewById(R.id.textView2);
@@ -51,34 +68,7 @@ public class MainActivity extends AppCompatActivity {
         textView4 = (TextView) findViewById(R.id.textView4);
 
         login = (Button) findViewById(R.id.login);
-        logout = (Button) findViewById(R.id.login);
-        session = Session.getCurrentSession();
-        session.addCallback(sessionCallback);
-
-        // 로그인 성공 유무
-        AuthService.getInstance()
-                .requestAccessTokenInfo(new ApiResponseCallback<AccessTokenInfoResponse>() {
-                    @Override
-                    public void onSessionClosed(ErrorResult errorResult) {
-                        Log.e("KAKAO_API", "session closed" + errorResult);
-                        login.setEnabled(false);
-                        logout.setEnabled(true);
-                        Log.e("KAKAO_API", "session closed2" + errorResult);
-                    }
-
-                    @Override
-                    public void onFailure(ErrorResult errorResult) {
-                        Log.e("KAKAO_API", "Failed" + errorResult);
-                        login.setEnabled(false);
-                        logout.setEnabled(true);
-                    }
-
-                    @Override
-                    public void onSuccess(AccessTokenInfoResponse result) {
-                        login.setEnabled(true);
-                        logout.setEnabled(false);
-                    }
-                });
+        logout = (Button) findViewById(R.id.logout);
 
         // 애니메이션
         flowAnim = AnimationUtils.loadAnimation(this, R.anim.flow);
@@ -116,15 +106,18 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.login:
                     session.open(AuthType.KAKAO_LOGIN_ALL, MainActivity.this);
+                    (MainActivity.this).onResume();
                     break;
                 case R.id.logout:
                     UserManagement.getInstance()
                             .requestLogout(new LogoutResponseCallback() {
                                 @Override
                                 public void onCompleteLogout() {
+                                    (MainActivity.this).onResume();
                                     Toast.makeText(MainActivity.this, "log out", Toast.LENGTH_SHORT).show();
                                 }
                             });
+                    break;
             }
         }
     };
