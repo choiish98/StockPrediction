@@ -106,15 +106,15 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.login:
                     session.open(AuthType.KAKAO_LOGIN_ALL, MainActivity.this);
-                    (MainActivity.this).onResume();
                     break;
                 case R.id.logout:
                     UserManagement.getInstance()
                             .requestLogout(new LogoutResponseCallback() {
                                 @Override
                                 public void onCompleteLogout() {
-                                    (MainActivity.this).onResume();
                                     Toast.makeText(MainActivity.this, "log out", Toast.LENGTH_SHORT).show();
+                                    Intent intent = getIntent();
+                                    startActivity(intent);
                                 }
                             });
                     break;
