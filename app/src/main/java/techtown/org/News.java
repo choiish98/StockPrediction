@@ -1,7 +1,5 @@
 package techtown.org;
 
-import android.graphics.BitmapFactory;
-
 public class News {
     String title;
     String summary;
@@ -9,15 +7,6 @@ public class News {
     String press;
     String img;
     String link;
-
-    News(String title, String summary, String date, String press, String img, String link) {
-        this.title = title;
-        this.summary = summary;
-        this.date = date;
-        this.press = press;
-        this.img = img;
-        this.link = link;
-    }
 
     News() {
         this.title = null;
