@@ -204,7 +204,7 @@ public class ItemOverview extends AppCompatActivity {
 
         // 클릭 리스너
         findViewById(R.id.go_home).setOnClickListener(onClickListener);
-        findViewById(R.id.go_notification).setOnClickListener(onClickListener);
+        findViewById(R.id.go_ranking).setOnClickListener(onClickListener);
         findViewById(R.id.go_disclosure).setOnClickListener(onClickListener);
         findViewById(R.id.go_predict).setOnClickListener(onClickListener);
     }
@@ -261,8 +261,8 @@ public class ItemOverview extends AppCompatActivity {
                 case R.id.go_disclosure:
                     gotoActivity(Disclosure.class);
                     break;
-                case R.id.go_notification:
-                    gotoActivity(Notification.class);
+                case R.id.go_ranking:
+                    gotoActivity(Ranking.class);
                     break;
                 case R.id.go_predict:
                     gotoActivity(Prediction.class);

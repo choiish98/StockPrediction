@@ -40,7 +40,7 @@
             android:text="뉴스/공시"
             android:background="@drawable/button"></Button>
         <Button
-            android:id="@+id/go_notification"
+            android:id="@+id/go_ranking"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"

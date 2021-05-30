@@ -32,7 +32,7 @@ public class Notification extends AppCompatActivity {
                     gotoActivity(ItemOverview.class);
                     break;
                 case R.id.go_disclosure:
-                    gotoActivity(Disclosure.class);
+                    gotoActivity(Ranking.class);
                     break;
                 case R.id.go_predict:
                     gotoActivity(Prediction.class);

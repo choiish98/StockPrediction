@@ -24,8 +24,6 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
             super(itemView) ;
 
             // 뷰 객체에 대한 참조. (hold strong reference)
-            rankImg = itemView.findViewById(R.id.rankImage);
-            rank = itemView.findViewById(R.id.rank);
             rankingName = itemView.findViewById(R.id.rankingName);
             rankingPoint = itemView.findViewById(R.id.rankingPoint);
             rankingProfit = itemView.findViewById(R.id.rankingProfit);
@@ -52,14 +50,10 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
     public void onBindViewHolder(RankingAdapter.ViewHolder holder, int position) {
-        String rankImg = mData[position].getRankImg();
-        String rank = mData[position].getRank();
         String rankingName = mData[position].getRankingName();
         String rankingPoint = mData[position].getRankingPoint();
         String rankingProfit = mData[position].getRankingProfit();
 
-        holder.rankImg.setText(rankImg);
-        holder.rank.setText(rank);
         holder.rankingName.setText(rankingName);
         holder.rankingPoint.setText(rankingPoint);
         holder.rankingProfit.setText(rankingProfit);

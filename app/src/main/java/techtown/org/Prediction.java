@@ -150,7 +150,7 @@ public class Prediction extends AppCompatActivity {
         findViewById(R.id.go_home).setOnClickListener(onClickListener);
         findViewById(R.id.go_notification).setOnClickListener(onClickListener);
         findViewById(R.id.go_disclosure).setOnClickListener(onClickListener);
-        findViewById(R.id.go_disclosure).setOnClickListener(onClickListener);
+        findViewById(R.id.go_overview).setOnClickListener(onClickListener);
     }
 
     // 백그라운드 동작을 위한 asyncTask
@@ -206,7 +206,7 @@ public class Prediction extends AppCompatActivity {
                     gotoActivity(ItemOverview.class);
                     break;
                 case R.id.go_notification:
-                    gotoActivity(Notification.class);
+                    gotoActivity(Ranking.class);
                     break;
                 case R.id.go_disclosure:
                     gotoActivity(Disclosure.class);

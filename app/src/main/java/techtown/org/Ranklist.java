@@ -1,27 +1,18 @@
 package techtown.org;
 
 public class Ranklist {
-    String rank;
     String rankingName;
     String rankingPoint;
     String rankingProfit;
-    String rankImg;
+    int size;
 
     Ranklist(){
-        this.rank = null;
         this.rankingName = null;
         this.rankingPoint =null;
         this.rankingProfit = null;
-        this.rankImg = null;
+        this.size = 0;
     }
 
-    //NumberFormat.getInstance(Locale.getDefault()).format(Int형 변수);
-    public void setRank(String rank){
-        this.rank = rank;
-    }
-    public String getRank(){
-        return this.rank;
-    }
     public void setRankingName(String rankingName){
         this.rankingName = rankingName;
     }
@@ -40,13 +31,8 @@ public class Ranklist {
     public String getRankingProfit(){
         return this.rankingProfit;
     }
-    public void setRankImg(String rankImg){
-        this.rankImg = rankImg;
-    }
-    public String getRankImg(){
-        return this.rankImg;
-    }
+    public void setSize(int size) { this.size  = size;}
     public int size() {
-        return 10;
+        return size;
     }
 }

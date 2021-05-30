@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     gotoActivity(Prediction.class);
                     break;
                 case R.id.button4:
-                    gotoActivity(Notification.class);
+                    gotoActivity(Ranking.class);
                     break;
                 case R.id.login:
                     session.open(AuthType.KAKAO_LOGIN_ALL, MainActivity.this);

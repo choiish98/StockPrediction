@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,9 +34,17 @@ public class Ranking extends AppCompatActivity {
             String url = new GlobalApplication().getApiURL();
             String rankList = new RestAPITask(url.concat("/users/api/list")).execute().get();
 
-            rankClass = new Ranklist[rankList.length()];
             // 정규화 필요
-            Log.e("rank", rankList);
+            JSONArray jsonArray = new JSONArray(rankList);
+            rankClass = new Ranklist[jsonArray.length()];
+            for(int i = 0;  i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                rankClass[i] = new Ranklist();
+                rankClass[i].setRankingName(jsonObject.getString("nickname"));
+                rankClass[i].setRankingPoint(jsonObject.getString("point"));
+                rankClass[i].setRankingProfit(jsonObject.getString("net_gain"));
+                rankClass[i].setSize(jsonArray.length());
+            }
 
             // 리사이클러뷰에 LinearLayoutManager 객체 지정.
             RecyclerView recyclerView = findViewById(R.id.rankingRecyclerView);
