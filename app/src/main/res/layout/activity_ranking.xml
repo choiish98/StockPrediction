@@ -40,11 +40,11 @@
             android:text="종목 개요"
             android:background="@drawable/button"></Button>
         <Button
-            android:id="@+id/go_notification"
+            android:id="@+id/go_disclosure"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:text="랭킹"
+            android:text="뉴스/공시"
             android:background="@drawable/button"></Button>
 
     </LinearLayout>
@@ -53,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -62,10 +63,63 @@
             android:layout_marginBottom="10dp"
             android:text="모의투자 랭킹"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/darkgray">
+
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="순위"
+                android:textColor="@color/white"
+                android:gravity="center_horizontal"
+                />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="닉네임"
+                tools:layout_editor_absoluteX="266dp"
+                tools:layout_editor_absoluteY="111dp"
+                android:textColor="@color/white"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="보유포인트"
+                tools:layout_editor_absoluteX="266dp"
+                tools:layout_editor_absoluteY="111dp"
+                android:textColor="@color/white"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="순수익"
+                android:textColor="@color/white"
+                tools:layout_editor_absoluteX="266dp"
+                tools:layout_editor_absoluteY="111dp"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rankingRecyclerView"
-            android:layout_width="373dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="20dp" />
     </LinearLayout>

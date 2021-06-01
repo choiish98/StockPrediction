@@ -18,6 +18,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.lang.String;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 
 public class Ranking extends AppCompatActivity {
@@ -26,7 +28,6 @@ public class Ranking extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
-
         Ranklist rankClass[];
 
         try {
@@ -40,9 +41,27 @@ public class Ranking extends AppCompatActivity {
             for(int i = 0;  i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 rankClass[i] = new Ranklist();
+                switch(i) {
+                    case 0 :
+                        rankClass[i].setRankImg(getResources().getDrawable(R.drawable.medal1));
+                        rankClass[i].setRank(null);
+                        break;
+                    case 1 :
+                        rankClass[i].setRankImg(getResources().getDrawable(R.drawable.medal2));
+                        rankClass[i].setRank(null);
+                        break;
+                    case 2 :
+                        rankClass[i].setRankImg(getResources().getDrawable(R.drawable.medal3));
+                        rankClass[i].setRank(null);
+                        break;
+                    default :
+                        rankClass[i].setRankImg(null);
+                        rankClass[i].setRank(String.valueOf(i + 1));
+                        break;
+                }
                 rankClass[i].setRankingName(jsonObject.getString("nickname"));
-                rankClass[i].setRankingPoint(jsonObject.getString("point"));
-                rankClass[i].setRankingProfit(jsonObject.getString("net_gain"));
+                rankClass[i].setRankingTotalPoint(NumberFormat.getInstance(Locale.getDefault()).format(Integer.parseInt(jsonObject.getString("total_point")))+" P");
+                rankClass[i].setRankingProfit(NumberFormat.getInstance(Locale.getDefault()).format(Integer.parseInt(jsonObject.getString("net_gain")))+" P");
                 rankClass[i].setSize(jsonArray.length());
             }
 
@@ -59,7 +78,7 @@ public class Ranking extends AppCompatActivity {
 
         // 클릭 리스너
         findViewById(R.id.go_home).setOnClickListener(onClickListener);
-        findViewById(R.id.go_notification).setOnClickListener(onClickListener);
+        findViewById(R.id.go_disclosure).setOnClickListener(onClickListener);
         findViewById(R.id.go_overview).setOnClickListener(onClickListener);
         findViewById(R.id.go_predict).setOnClickListener(onClickListener);
     }
@@ -116,8 +135,8 @@ public class Ranking extends AppCompatActivity {
                 case R.id.go_overview:
                     gotoActivity(ItemOverview.class);
                     break;
-                case R.id.go_notification:
-                    gotoActivity(Notification.class);
+                case R.id.go_disclosure:
+                    gotoActivity(Disclosure.class);
                     break;
                 case R.id.go_predict:
                     gotoActivity(Prediction.class);
