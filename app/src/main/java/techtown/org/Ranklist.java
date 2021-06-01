@@ -3,12 +3,14 @@ package techtown.org;
 public class Ranklist {
     String rankingName;
     String rankingPoint;
+    String rankingDailyPoint;
     String rankingProfit;
     int size;
 
     Ranklist(){
         this.rankingName = null;
         this.rankingPoint =null;
+        this.rankingDailyPoint = null;
         this.rankingProfit = null;
         this.size = 0;
     }
@@ -25,6 +27,8 @@ public class Ranklist {
     public String getRankingPoint(){
         return this.rankingPoint;
     }
+    public void getRankingDailyPoint(String rankingDailyPoint){this.rankingDailyPoint = rankingDailyPoint;}
+    public String setRankingDailyPoint(){return this.rankingDailyPoint;}
     public void setRankingProfit(String rankingProfit){
         this.rankingProfit = rankingProfit;
     }

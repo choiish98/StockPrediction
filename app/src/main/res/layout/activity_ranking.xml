@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="랭킹"
+            android:text="모의투자 랭킹"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <androidx.recyclerview.widget.RecyclerView

@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHolder> {
 
     private Ranklist[] mData = null ;
@@ -18,6 +20,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
         TextView rank;
         TextView rankingName;
         TextView rankingPoint;
+        TextView rankingDailyPoint;
         TextView rankingProfit;
 
         ViewHolder(View itemView) {
