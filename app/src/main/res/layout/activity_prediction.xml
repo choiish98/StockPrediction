@@ -97,7 +97,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/searchRecylcerview"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"></androidx.recyclerview.widget.RecyclerView>
+                    android:layout_height="200dp"
+                    android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
 
