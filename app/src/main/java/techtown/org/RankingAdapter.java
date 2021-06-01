@@ -1,12 +1,16 @@
 package techtown.org;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
 
 public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHolder> {
 
@@ -14,18 +18,20 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView rankImg;
+        ImageView rankImg;
         TextView rank;
         TextView rankingName;
-        TextView rankingPoint;
+        TextView rankingTotalPoint;
         TextView rankingProfit;
 
         ViewHolder(View itemView) {
             super(itemView) ;
 
             // 뷰 객체에 대한 참조. (hold strong reference)
+            rankImg = itemView.findViewById(R.id.rankImg);
+            rank = itemView.findViewById(R.id.rank);
             rankingName = itemView.findViewById(R.id.rankingName);
-            rankingPoint = itemView.findViewById(R.id.rankingPoint);
+            rankingTotalPoint = itemView.findViewById(R.id.rankingTotalPoint);
             rankingProfit = itemView.findViewById(R.id.rankingProfit);
         }
     }
@@ -50,12 +56,16 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
     public void onBindViewHolder(RankingAdapter.ViewHolder holder, int position) {
+        Drawable rankImg = mData[position].getRankImg();
+        String rank = mData[position].getRank();
         String rankingName = mData[position].getRankingName();
-        String rankingPoint = mData[position].getRankingPoint();
+        String rankingTotalPoint = mData[position].getRankingTotalPoint();
         String rankingProfit = mData[position].getRankingProfit();
 
+        holder.rankImg.setImageDrawable(rankImg);
+        holder.rank.setText(rank);
         holder.rankingName.setText(rankingName);
-        holder.rankingPoint.setText(rankingPoint);
+        holder.rankingTotalPoint.setText(rankingTotalPoint);
         holder.rankingProfit.setText(rankingProfit);
     }
 

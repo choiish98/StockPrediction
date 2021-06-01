@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF3200</color>
+    <color name="darkgray">#FF333333</color>
+    <color name="gray">#FF444444</color>
     <color name="newsTitle">#002560</color>
     <color name="newsPress">#C88282</color>
     <color name="newsDate">#909090</color>
