@@ -18,6 +18,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.lang.String;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 
 public class Ranking extends AppCompatActivity {
@@ -41,8 +43,8 @@ public class Ranking extends AppCompatActivity {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 rankClass[i] = new Ranklist();
                 rankClass[i].setRankingName(jsonObject.getString("nickname"));
-                rankClass[i].setRankingPoint(jsonObject.getString("point"));
-                rankClass[i].setRankingProfit(jsonObject.getString("net_gain"));
+                rankClass[i].setRankingPoint(NumberFormat.getInstance(Locale.getDefault()).format(Integer.parseInt(jsonObject.getString("point"))));
+                rankClass[i].setRankingProfit(NumberFormat.getInstance(Locale.getDefault()).format(Integer.parseInt(jsonObject.getString("net_gain"))));
                 rankClass[i].setSize(jsonArray.length());
             }
 

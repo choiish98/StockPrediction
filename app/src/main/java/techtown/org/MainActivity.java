@@ -52,12 +52,20 @@ public class MainActivity extends AppCompatActivity {
             public void onSessionClosed(ErrorResult errorResult) {
                 login.setVisibility(View.VISIBLE);
                 logout.setVisibility(View.INVISIBLE);
+                Log.e("KAKAO_API", "세션이 닫혀 있음: " + errorResult);
+            }
+
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                Log.e("KAKAO_API", "토큰 정보 요청 실패: " + errorResult);
             }
 
             @Override
             public void onSuccess(AccessTokenInfoResponse result) {
                 login.setVisibility(View.INVISIBLE);
                 logout.setVisibility(View.VISIBLE);
+                Log.i("KAKAO_API", "사용자 아이디: " + result.getUserId());
+                Log.i("KAKAO_API", "남은 시간(s): " + result.getExpiresInMillis());;
             }
         });
 
