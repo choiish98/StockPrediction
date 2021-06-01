@@ -18,10 +18,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.lang.String;
-import java.text.NumberFormat;
-import java.util.Locale;
-
-import static java.util.Locale.getDefault;
 
 
 public class Ranking extends AppCompatActivity {
@@ -38,7 +34,6 @@ public class Ranking extends AppCompatActivity {
             String url = new GlobalApplication().getApiURL();
             String rankList = new RestAPITask(url.concat("/users/api/list")).execute().get();
 
-            //dailyPoint 변수 추가
             // 정규화 필요
             JSONArray jsonArray = new JSONArray(rankList);
             rankClass = new Ranklist[jsonArray.length()];
@@ -46,10 +41,7 @@ public class Ranking extends AppCompatActivity {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 rankClass[i] = new Ranklist();
                 rankClass[i].setRankingName(jsonObject.getString("nickname"));
-                //NumberFormat.getInstance(Locale.getDefault()).format(int 형 변수)
-                rankClass[i].setRankingPoint(NumberFormat.getInstance(Locale.getDefault()).format(Integer.parseInt(jsonObject.getString("point"))));
-                Log.e("point",NumberFormat.getInstance(getDefault()).format(jsonObject.getString("point")));
-                //rankClass[i].setRankingPoint(jsonObject.getString("point"));
+                rankClass[i].setRankingPoint(jsonObject.getString("point"));
                 rankClass[i].setRankingProfit(jsonObject.getString("net_gain"));
                 rankClass[i].setSize(jsonArray.length());
             }
