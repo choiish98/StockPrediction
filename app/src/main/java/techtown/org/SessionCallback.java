@@ -1,6 +1,8 @@
 package techtown.org;
 
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 
 import com.kakao.auth.ISessionCallback;
 import com.kakao.network.ErrorResult;
@@ -12,7 +14,7 @@ import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.OptionalBoolean;
 import com.kakao.util.exception.KakaoException;
 
-public class SessionCallback implements ISessionCallback {
+public class SessionCallback implements ISessionCallback  {
 
     // 로그인에 성공한 상태
     @Override
@@ -57,7 +59,10 @@ public class SessionCallback implements ISessionCallback {
 
                             } else {
                                 // 이메일 획득 불가
+                                email = kakaoAccount.getProfile().getNickname().concat("@kakao.tp.social");
                             }
+
+                            Log.e("email", email);
 
                             // 프로필
                             Profile profile = kakaoAccount.getProfile();
