@@ -33,7 +33,7 @@ public class GongsiAdapter extends RecyclerView.Adapter<GongsiAdapter.ViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData[0].getLink()));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData[getAdapterPosition()].getLink()));
                     view.getContext().startActivity(intent);
                 }
             });

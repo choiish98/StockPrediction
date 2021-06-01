@@ -80,7 +80,10 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             String img = mData[position].getImg();
             if(img.isEmpty()){
                 Log.e("img:", "isEmpty");
-            } else holder.img.setImageBitmap(new downImgITask(img).execute().get());
+            } else {
+                holder.img.setVisibility(View.VISIBLE);
+                holder.img.setImageBitmap(new downImgITask(img).execute().get());
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
