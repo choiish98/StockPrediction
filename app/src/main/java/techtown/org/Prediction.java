@@ -117,7 +117,7 @@ public class Prediction extends AppCompatActivity {
 
         // 아이템 추가
         try {
-            String url = new GlobalApplication().getApiURL();
+            String url = new APIURL().getApiURL();
             String stockList = new ItemOverview.RestAPITask(url.concat("/stocks/api/stocks/list")).execute().get();
             JSONArray jsonArray = new JSONArray(stockList);
 

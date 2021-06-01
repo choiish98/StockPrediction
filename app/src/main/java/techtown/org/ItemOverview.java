@@ -139,7 +139,7 @@ public class ItemOverview extends AppCompatActivity {
 
         // 아이템 추가
         try {
-            String url = new GlobalApplication().getApiURL();
+            String url = new APIURL().getApiURL();
             String stockList = new RestAPITask(url.concat("/stocks/api/stocks/list")).execute().get();
             JSONArray jsonArray = new JSONArray(stockList);
 
@@ -165,7 +165,7 @@ public class ItemOverview extends AppCompatActivity {
             public void onItemClick(View v, String code) {
                 try {
                     String infoURL = "/stocks/api/stock_suminfo_data?code=";
-                    String apiURL = new GlobalApplication().getApiURL();
+                    String apiURL = new APIURL().getApiURL();
                     String info = new RestAPITask(apiURL.concat(infoURL).concat(code)).execute().get();
                     JSONObject jsonObject = new JSONObject(info);
                     String stock_info_big_left_price1 = jsonObject.getString("stock_info_big_left_price");

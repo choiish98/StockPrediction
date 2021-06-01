@@ -33,7 +33,7 @@ public class Ranking extends AppCompatActivity {
 
         try {
             // rest api 통신// rest api 통신
-            String url = new GlobalApplication().getApiURL();
+            String url = new APIURL().getApiURL();
             String rankList = new RestAPITask(url.concat("/users/api/list")).execute().get();
 
             // 정규화 필요

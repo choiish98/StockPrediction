@@ -84,7 +84,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                         try {
                             // 아이템 클릭 시 종목 코드 받아오기
                             String stock = textView.getText().toString();
-                            String apiURL = new GlobalApplication().getApiURL();
+                            String apiURL = new APIURL().getApiURL();
                             String url = "/stocks/api/related_companies?text=";
                             stockList = new RestAPITask(apiURL.concat(url.concat(stock))).execute().get();
                             JSONObject jsonObject = new JSONObject(stockList);
