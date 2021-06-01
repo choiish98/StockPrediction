@@ -14,7 +14,7 @@ import com.kakao.auth.KakaoSDK;
 
 public class GlobalApplication extends Application {
     private static GlobalApplication instance;
-    private static String apiURL = "http://87fc50980bc9.ngrok.io";
+    private static String apiURL = "http://stockpredict.kr";
 
     public String getApiURL() {
         return this.apiURL;

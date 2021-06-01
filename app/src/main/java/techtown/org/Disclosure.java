@@ -36,6 +36,7 @@ public class Disclosure extends AppCompatActivity {
             // rest api 통신
             String url = new GlobalApplication().getApiURL();
             String newsList = new RestAPITask(url.concat("/stocks/api/news/list")).execute().get();
+            Log.e("news",newsList);
             JSONArray jsonArray = new JSONArray(newsList);
 
             newsClass = new News[jsonArray.length()];
