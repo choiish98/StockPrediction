@@ -98,6 +98,7 @@ public class Prediction extends AppCompatActivity {
         // 종목 검색
         recyclerView = (RecyclerView)findViewById(R.id.searchRecylcerview);
         editText = (EditText)findViewById(R.id.edittext);
+        editText.setOnClickListener(onClickListener);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -136,7 +137,7 @@ public class Prediction extends AppCompatActivity {
 
         adapter = new PredictionAdapter(getApplicationContext(), items);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
+
 
         adapter.setOnItemClickListener(new ItemAdapter.OnItemClickListener() {
             @Override
@@ -210,6 +211,10 @@ public class Prediction extends AppCompatActivity {
                     break;
                 case R.id.go_disclosure:
                     gotoActivity(Disclosure.class);
+                    break;
+                case R.id.edittext:
+                    recyclerView.setVisibility(View.VISIBLE);
+                    recyclerView.setAdapter(adapter);
                     break;
             }
         }

@@ -9,7 +9,6 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_mark"
         android:text="종목선택"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -69,7 +68,6 @@
     repositories {
     maven { url 'https://jitpack.io' }
     }
-
     dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     }

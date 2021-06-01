@@ -1,17 +1,23 @@
 package techtown.org;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.AutoText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -43,16 +49,19 @@ import static android.graphics.Color.rgb;
 
 public class ItemOverview extends AppCompatActivity {
 
+
     TextView siga, stock_info_big_left_price, jeonildaebi,
             georaeryang, georaedaegeum, goga, jeoga, sigasum, foreignper, objectjuga, pereps, ju52;
 
     private LineChart mChart;
     RecyclerView recyclerView;
+    ImageButton searchbtn;
     EditText editText;
     ItemAdapter adapter;
 
     ArrayList<String> items = new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,10 +129,10 @@ public class ItemOverview extends AppCompatActivity {
         // 종목 검색
         recyclerView = (RecyclerView)findViewById(R.id.searchRecylcerview);
         editText = (EditText)findViewById(R.id.edittext);
+        editText.setOnClickListener(onClickListener);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -133,9 +142,20 @@ public class ItemOverview extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         });
+        //키보드 숨기기
+//        public static void hideSoftKeyboard(Activity activity) {
+//            InputMethodManager inputMethodManager =
+//                    (InputMethodManager) activity.getSystemService(
+//                            Activity.INPUT_METHOD_SERVICE);
+//            if(inputMethodManager.isAcceptingText()){
+//                inputMethodManager.hideSoftInputFromWindow(
+//                        activity.getCurrentFocus().getWindowToken(),
+//                        0
+//                );
+//            }
+//        }
 
         // 아이템 추가
         try {
@@ -158,7 +178,7 @@ public class ItemOverview extends AppCompatActivity {
 
         adapter = new ItemAdapter(getApplicationContext(), items);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
+
 
         adapter.setOnItemClickListener(new ItemAdapter.OnItemClickListener() {
             @Override
@@ -266,6 +286,10 @@ public class ItemOverview extends AppCompatActivity {
                     break;
                 case R.id.go_predict:
                     gotoActivity(Prediction.class);
+                    break;
+                case R.id.edittext:
+                    recyclerView.setVisibility(View.VISIBLE);
+                    recyclerView.setAdapter(adapter);
                     break;
             }
         }
