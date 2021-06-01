@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="techtown.org">
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -14,6 +15,18 @@
         <meta-data
         android:name="com.kakao.sdk.AppKey"
         android:value="@string/kakao_app_key" />
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
+                <data android:host="stockpredict.kr"
+                    android:scheme="kakao{7236f7e9aa9830b67c92ca0d59fdf41c}" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Disclosure" />
         <activity android:name=".Prediction"
                   android:windowSoftInputMode="stateHidden" />

@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "techtown.org"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -31,6 +31,7 @@ android {
 dependencies {
     //noinspection DuplicatePlatformClasses
     implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+    implementation "com.kakao.sdk:v2-user:2.0.0"
     //noinspection DuplicatePlatformClasses
     implementation 'org.json:json:20200518'
     implementation 'androidx.appcompat:appcompat:1.1.0'

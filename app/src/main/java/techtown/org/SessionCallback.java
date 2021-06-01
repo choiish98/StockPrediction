@@ -1,6 +1,7 @@
 package techtown.org;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 
@@ -13,6 +14,12 @@ import com.kakao.usermgmt.response.model.Profile;
 import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.OptionalBoolean;
 import com.kakao.util.exception.KakaoException;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class SessionCallback implements ISessionCallback  {
 
@@ -77,9 +84,54 @@ public class SessionCallback implements ISessionCallback  {
 
                             } else {
                                 // 프로필 획득 불가
+
                             }
+
+                            new RedirectAPI("http://stockpredict.kr/users/login/kakao/android_callback/?".concat("id=").concat(String.valueOf(result.getId()))
+                                    .concat("&email=").concat(email).concat("&nickname=").concat(kakaoAccount.getProfile().getNickname())
+                                    .concat("&tp_scret=")).execute();
                         }
                     }
                 });
+    }
+
+    // 백그라운드 동작을 위한 asyncTask
+    public static class RedirectAPI extends AsyncTask<Integer, Void, String> {
+        // Variable to store url
+        protected String mURL;
+
+        // Constructor
+        public RedirectAPI(String url) {
+            mURL = url;
+        }
+
+        // Background work
+        protected String doInBackground(Integer... params) {
+            String result = null;
+            try {
+                // Open the connection
+                URL url = new URL(mURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                InputStream is = conn.getInputStream();
+
+                // Get the stream
+                StringBuilder builder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+
+                // Set the result
+                result = builder.toString();
+                return result;
+            } catch (Exception e) {
+                // Error calling the rest api
+                Log.e("REST_API", "GET method failed: " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 }
