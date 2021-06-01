@@ -50,6 +50,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.prediction_fragment, container, false);
         editSearch = (EditText) v.findViewById(R.id.search);
+        //editSearch.
         listView = (ListView) v.findViewById(R.id.listView);
         list = new ArrayList<String>();
 
