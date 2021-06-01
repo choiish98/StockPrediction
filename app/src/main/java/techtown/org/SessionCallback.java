@@ -1,9 +1,7 @@
 package techtown.org;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 
 import com.kakao.auth.ISessionCallback;
 import com.kakao.network.ErrorResult;
@@ -86,10 +84,10 @@ public class SessionCallback implements ISessionCallback  {
                                 // 프로필 획득 불가
 
                             }
-
+                            TpScret tpScret = new TpScret();
                             new RedirectAPI("http://stockpredict.kr/users/login/kakao/android_callback/?".concat("id=").concat(String.valueOf(result.getId()))
                                     .concat("&email=").concat(email).concat("&nickname=").concat(kakaoAccount.getProfile().getNickname())
-                                    .concat("&tp_scret=")).execute();
+                                    .concat("&tp_scret=").concat(tpScret.getScret())).execute();
                         }
                     }
                 });
