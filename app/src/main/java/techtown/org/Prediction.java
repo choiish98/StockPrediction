@@ -58,6 +58,8 @@ public class Prediction extends AppCompatActivity {
     StockAdapter stockAdapter;
 
     TextView total_text;
+    TextView total;
+    TextView now_price;
     Button order_btn;
 
     ArrayList<String> items = new ArrayList<>();
@@ -69,6 +71,8 @@ public class Prediction extends AppCompatActivity {
         setContentView(R.layout.activity_prediction);
 
         // 변수 초기화
+        now_price = (TextView) findViewById(R.id.now_price);
+        total = (TextView) findViewById(R.id.total);
         total_text = (TextView) findViewById(R.id.total_text);
         order_btn = (Button) findViewById(R.id.order_btn);
 
@@ -145,8 +149,6 @@ public class Prediction extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                TextView total = (TextView) findViewById(R.id.total);
-                TextView now_price = (TextView) findViewById(R.id.now_price);
                 if(editText2.getText() != null) {
                     int price = Integer.parseInt(charSequence.toString()) * Integer.parseInt(now_price.getText().toString());
                     total.setText(String.valueOf(price));
@@ -238,7 +240,36 @@ public class Prediction extends AppCompatActivity {
         findViewById(R.id.go_overview).setOnClickListener(onClickListener);
         findViewById(R.id.buy_btn).setOnClickListener(onClickListener);
         findViewById(R.id.sell_btn).setOnClickListener(onClickListener);
-        findViewById(R.id.order_btn).setOnClickListener(onClickListener);
+        findViewById(R.id.order_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // http://stockpredict.kr/stocks/buy_stock
+                UserManagement.getInstance().me(new MeV2ResponseCallback() {
+                    @Override
+                    public void onSessionClosed(ErrorResult errorResult) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(MeV2Response result) {
+                        TpScret tpScret = new TpScret();
+                        String url = new APIURL().getApiURL();
+                        String urlplus;
+                        if(order_btn.getText().toString().equals("매수하기")) {
+                            urlplus = "/stocks/buy_stock?";
+                        } else {
+                            urlplus = "/stocks/sell_stock?";
+                        }
+                        new RedirectAPI(url.concat(urlplus)
+                                .concat("tp_secret=").concat(tpScret.getScret())
+                                .concat("&nickname=").concat(result.getKakaoAccount().getProfile().getNickname())
+                                .concat("&amount=").concat(editText2.getText().toString())
+                                .concat("&current_price=").concat(now_price.getText().toString())
+                                .concat("&company_name=").concat("삼성전자")).execute();
+                    }
+                });
+            }
+        });
     }
 
     // 백그라운드 동작을 위한 asyncTask
@@ -311,8 +342,6 @@ public class Prediction extends AppCompatActivity {
                     total_text.setText("총 판매 금액");
                     order_btn.setText("매도하기");
                     break;
-                case R.id.order_btn:
-                    break;
             }
         }
     };
@@ -321,5 +350,45 @@ public class Prediction extends AppCompatActivity {
     private void gotoActivity(Class c) {
         Intent intent = new Intent(Prediction.this, c);
         startActivity(intent);
+    }
+
+    // 백그라운드 동작을 위한 asyncTask
+    public static class RedirectAPI extends AsyncTask<Integer, Void, String> {
+        // Variable to store url
+        protected String mURL;
+
+        // Constructor
+        public RedirectAPI(String url) {
+            mURL = url;
+        }
+
+        // Background work
+        protected String doInBackground(Integer... params) {
+            String result = null;
+            try {
+                // Open the connection
+                URL url = new URL(mURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                InputStream is = conn.getInputStream();
+
+                // Get the stream
+                StringBuilder builder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+
+                // Set the result
+                result = builder.toString();
+                return result;
+            } catch (Exception e) {
+                // Error calling the rest api
+                Log.e("REST_API", "GET method failed: " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 }
