@@ -194,7 +194,7 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/table_inside"
                             android:gravity="center"
-                            android:text="text"
+                            android:text="1000000"
                             android:textSize="18sp" />
 
                     </TableRow>
@@ -219,7 +219,7 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/table_inside"
                             android:gravity="center"
-                            android:text=""
+                            android:text="80000"
                             android:textSize="18sp" />
                     </TableRow>
 
@@ -242,7 +242,7 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/table_inside"
                             android:gravity="center"
-                            android:text="0"
+                            android:text=""
                             android:textSize="18sp" />
                     </TableRow>
 

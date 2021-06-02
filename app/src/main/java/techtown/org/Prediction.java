@@ -72,7 +72,6 @@ public class Prediction extends AppCompatActivity {
         total_text = (TextView) findViewById(R.id.total_text);
         order_btn = (Button) findViewById(R.id.order_btn);
 
-
         // 곡선 그래프
         mChart = (LineChart) findViewById(R.id.prediction_lineChart);
 
@@ -134,6 +133,28 @@ public class Prediction extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+
+        // textWatcher
+        EditText editText2 = findViewById(R.id.amount);
+        editText2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                TextView total = (TextView) findViewById(R.id.total);
+                TextView now_price = (TextView) findViewById(R.id.now_price);
+                if(editText2.getText() != null) {
+                    int price = Integer.parseInt(charSequence.toString()) * Integer.parseInt(now_price.getText().toString());
+                    total.setText(String.valueOf(price));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
             }
         });
 
