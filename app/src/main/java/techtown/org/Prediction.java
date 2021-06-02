@@ -1,6 +1,7 @@
 package techtown.org;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -57,6 +58,7 @@ public class Prediction extends AppCompatActivity {
     PredictionAdapter adapter;
     StockAdapter stockAdapter;
 
+    TextView point;
     TextView total_text;
     TextView total;
     TextView now_price;
@@ -75,6 +77,7 @@ public class Prediction extends AppCompatActivity {
         total = (TextView) findViewById(R.id.total);
         total_text = (TextView) findViewById(R.id.total_text);
         order_btn = (Button) findViewById(R.id.order_btn);
+        point = (TextView) findViewById(R.id.point);;
 
         // 곡선 그래프
         mChart = (LineChart) findViewById(R.id.prediction_lineChart);
@@ -206,7 +209,12 @@ public class Prediction extends AppCompatActivity {
             public void onSuccess(MeV2Response result) {
                 String nickname = result.getKakaoAccount().getProfile().getNickname();
                 try {
+                    // 내 보유 포인트
                     String url = new APIURL().getApiURL();
+                    String pointString = new GetPoint(url.concat("users/get_user_point_api?nickname=").concat(nickname)).execute().get();
+                    point.setText(pointString);
+
+                    // 내 보유 주식
                     String stock_data = new GetStock(url.concat("/stocks/api/stocks/simul_stock_list?nickname=").concat(nickname).concat("(카카오)")).execute().get();
                     JSONArray jsonArray = new JSONArray(stock_data);
                     Stock[] stock_items = new Stock[jsonArray.length()];
@@ -279,6 +287,47 @@ public class Prediction extends AppCompatActivity {
 
         // Constructor
         public GetStock(String url) {
+            mURL = url;
+        }
+
+        // Background work
+        protected String doInBackground(Integer... params) {
+            String result = null;
+            try {
+                // Open the connection
+                URL url = new URL(mURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                InputStream is = conn.getInputStream();
+
+                // Get the stream
+                StringBuilder builder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+
+                // Set the result
+                result = builder.toString();
+                return result;
+            }
+            catch (Exception e) {
+                // Error calling the rest api
+                Log.e("REST_API", "GET method failed: " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
+
+    // 백그라운드 동작을 위한 asyncTask
+    public static class GetPoint extends AsyncTask<Integer, Void, String> {
+        // Variable to store url
+        protected String mURL;
+
+        // Constructor
+        public GetPoint(String url) {
             mURL = url;
         }
 
