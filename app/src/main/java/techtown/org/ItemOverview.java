@@ -86,51 +86,6 @@ public class ItemOverview extends AppCompatActivity {
         pereps = findViewById(R.id.pereps);
         ju52 = findViewById(R.id.ju52);;
 
-        // 곡선 그래프
-        mChart = (LineChart) findViewById(R.id.lineChart);
-
-        //mChart.setOnChartGestureListener(MainActivity.this);
-        //mChart.setOnChartValueSelectedListener(MainActivity.this);
-
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(false);
-        mChart.setDrawGridBackground(false);
-        mChart.getXAxis().setDrawLabels(false);
-        mChart.getAxisRight().setDrawLabels(false);
-        mChart.getXAxis().setDrawGridLines(false);
-        mChart.getAxisRight().setDrawGridLines(false);
-        mChart.getAxisLeft().setDrawGridLines(false);
-
-        ArrayList<Entry> yValues = new ArrayList<>();
-
-        yValues.add(new Entry(0, 20f));
-        yValues.add(new Entry(1, 35f));
-        yValues.add(new Entry(2, 46f));
-        yValues.add(new Entry(3, 50f));
-        yValues.add(new Entry(4, 10f));
-        yValues.add(new Entry(5, 60f));
-        yValues.add(new Entry(6, 30f));
-
-        LineDataSet set1 = new LineDataSet(yValues, "Data set 1");
-
-        set1.setFillAlpha(110);
-        set1.setColor(rgb(150, 31, 47));
-        set1.setLineWidth(2f);
-        set1.setCircleColor(rgb(150, 31, 47));
-        set1.setFillColor(rgb(150, 31, 47));
-        set1.setDrawHighlightIndicators(false);
-        set1.setDrawValues(false);
-        set1.setValueTextColor(Color.WHITE);
-
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
-
-        LineData data = new LineData(dataSets);
-
-        mChart.setData(data);
-        // 곡선 그래프
-
         // 종목 검색
         recyclerView = (RecyclerView)findViewById(R.id.searchRecylcerview);
         editText = (EditText)findViewById(R.id.edittext);
@@ -177,6 +132,7 @@ public class ItemOverview extends AppCompatActivity {
             @Override
             public void onItemClick(View v, String code) {
                 try {
+                    // 종합 정보 표
                     String infoURL = "/stocks/api/stock_suminfo_data?code=";
                     String apiURL = new APIURL().getApiURL();
                     String info = new RestAPITask(apiURL.concat(infoURL).concat(code)).execute().get();
@@ -205,6 +161,58 @@ public class ItemOverview extends AppCompatActivity {
                     objectjuga.setText(objectjuga1);
                     pereps.setText(pereps1);
                     ju52.setText(ju521);;
+
+                    // 그래프
+                    // 곡선 그래프
+                    mChart = (LineChart) findViewById(R.id.lineChart);
+                    mChart.setVisibility(View.VISIBLE);
+
+                    //mChart.setOnChartGestureListener(MainActivity.this);
+                    //mChart.setOnChartValueSelectedListener(MainActivity.this);
+
+                    mChart.setDragEnabled(true);
+                    mChart.setScaleEnabled(false);
+                    mChart.setDrawGridBackground(false);
+                    mChart.getXAxis().setDrawLabels(false);
+                    mChart.getAxisRight().setDrawLabels(false);
+                    mChart.getXAxis().setDrawGridLines(false);
+                    mChart.getAxisRight().setDrawGridLines(false);
+                    mChart.getAxisLeft().setDrawGridLines(false);
+
+                    ArrayList<Entry> yValues = new ArrayList<>();
+
+                    // data
+                    String url = new APIURL().getApiURL();
+                    String value = new RestAPITask(url.concat("/stocks/api/graph_html?companyName=").concat("삼성전자")).execute().get();
+                    JSONObject valueObject = new JSONObject(value);
+                    JSONArray valueDataObject = valueObject.getJSONArray("data");
+                    JSONObject realObject = valueDataObject.getJSONObject(0);
+                    JSONArray realdata = realObject.getJSONArray("y");
+                    Log.e("realdata", realdata.toString());
+
+                    for(int i = 0; i < realdata.length(); i++) {
+                        yValues.add(new Entry(i, Float.parseFloat(realdata.getString(i))));
+                    }
+
+                    LineDataSet set1 = new LineDataSet(yValues, "삼성전자".concat("종가"));
+
+                    set1.setFillAlpha(110);
+                    set1.setColor(rgb(170, 26, 26));
+                    set1.setLineWidth(2f);
+                    set1.setCircleColor(rgb(170, 26, 26));
+                    set1.setFillColor(rgb(170, 26, 26));
+                    set1.setDrawHighlightIndicators(false);
+                    set1.setDrawValues(false);
+                    set1.setValueTextColor(Color.WHITE);
+
+
+                    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                    dataSets.add(set1);
+
+                    LineData data = new LineData(dataSets);
+
+                    mChart.setData(data);
+                    // 곡선 그래프
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
