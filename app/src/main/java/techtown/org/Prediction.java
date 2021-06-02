@@ -301,6 +301,9 @@ public class Prediction extends AppCompatActivity {
                                 .concat("&amount=").concat(editText2.getText().toString())
                                 .concat("&current_price=").concat(now_price.getText().toString().replace(",",""))
                                 .concat("&company_name=").concat(editText.getText().toString())).execute();
+
+                        finish();
+                        startActivity(getIntent());
                     }
                 });
             }
