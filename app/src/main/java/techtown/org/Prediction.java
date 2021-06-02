@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,8 @@ public class Prediction extends AppCompatActivity {
     PredictionAdapter adapter;
     StockAdapter stockAdapter;
 
+    LinearLayout invest;
+
     TextView point;
     TextView total_text;
     TextView total;
@@ -79,7 +82,8 @@ public class Prediction extends AppCompatActivity {
         total = (TextView) findViewById(R.id.total);
         total_text = (TextView) findViewById(R.id.total_text);
         order_btn = (Button) findViewById(R.id.order_btn);
-        point = (TextView) findViewById(R.id.point);;
+        point = (TextView) findViewById(R.id.point);
+        invest = (LinearLayout) findViewById(R.id.invest);
 
         // 곡선 그래프
         mChart = (LineChart) findViewById(R.id.prediction_lineChart);
@@ -370,6 +374,7 @@ public class Prediction extends AppCompatActivity {
                     break;
                 case R.id.edittext:
                     recyclerView.setVisibility(View.VISIBLE);
+                    invest.setVisibility(View.VISIBLE);
                     recyclerView.setAdapter(adapter);
                     break;
                 case R.id.buy_btn:
