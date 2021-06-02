@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -24,6 +25,14 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.kakao.auth.ApiResponseCallback;
+import com.kakao.auth.AuthService;
+import com.kakao.auth.Session;
+import com.kakao.auth.network.response.AccessTokenInfoResponse;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeV2ResponseCallback;
+import com.kakao.usermgmt.response.MeV2Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -162,15 +171,44 @@ public class Prediction extends AppCompatActivity {
         stock_recyclerView = (RecyclerView)findViewById(R.id.stockRecylcerview);
         stock_recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
-        // dumy
-        Stock[] stock_items = new Stock[1];
-        stock_items[0] = new Stock();
-        stock_items[0].setStock_name("삼성전자");
-        stock_items[0].setAmount("123");
-        stock_items[0].setSize(1);
+        // data
+        // 사용자 토큰 받아오기
+        UserManagement.getInstance().me(new MeV2ResponseCallback() {
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
 
-        stockAdapter = new StockAdapter(stock_items);
-        stock_recyclerView.setAdapter(stockAdapter);
+            }
+
+            @Override
+            public void onSuccess(MeV2Response result) {
+                String nickname = result.getKakaoAccount().getProfile().getNickname();
+                try {
+                    String url = new APIURL().getApiURL();
+                    String stock_data = new GetStock(url.concat("/stocks/api/stocks/simul_stock_list?nickname=").concat(nickname).concat("(카카오)")).execute().get();
+                    JSONArray jsonArray = new JSONArray(stock_data);
+                    Stock[] stock_items = new Stock[jsonArray.length()];
+                    for(int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        JSONObject object = jsonObject.getJSONObject("fields");
+                        Log.e("jsonObject", object.toString());
+
+                        stock_items[i] = new Stock();
+                        stock_items[i].setStock_name(object.getString("stock_name"));
+                        stock_items[i].setAmount(object.getString("amount"));
+                        stock_items[i].setSize(jsonArray.length());
+
+                        stockAdapter = new StockAdapter(stock_items);
+                        stock_recyclerView.setAdapter(stockAdapter);
+                    }
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         // 클릭 리스너
         findViewById(R.id.go_home).setOnClickListener(onClickListener);
@@ -183,12 +221,12 @@ public class Prediction extends AppCompatActivity {
     }
 
     // 백그라운드 동작을 위한 asyncTask
-    public static class RestAPITask extends AsyncTask<Integer, Void, String> {
+    public static class GetStock extends AsyncTask<Integer, Void, String> {
         // Variable to store url
         protected String mURL;
 
         // Constructor
-        public RestAPITask(String url) {
+        public GetStock(String url) {
             mURL = url;
         }
 
