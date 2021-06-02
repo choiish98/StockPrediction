@@ -15,37 +15,37 @@
         android:layout_gravity="center"
         android:gravity="center">
 
-        <Button
+        <com.skydoves.elasticviews.ElasticButton
             android:id="@+id/go_home"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:text="홈"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            android:background="@drawable/button"></Button>
-        <Button
+            android:background="@drawable/button"></com.skydoves.elasticviews.ElasticButton>
+        <com.skydoves.elasticviews.ElasticButton
             android:id="@+id/go_predict"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:text="예측"
-            android:background="@drawable/button"></Button>
-        <Button
+            android:background="@drawable/button"></com.skydoves.elasticviews.ElasticButton>
+        <com.skydoves.elasticviews.ElasticButton
             android:id="@+id/go_disclosure"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:text="뉴스/공시"
-            android:background="@drawable/button"></Button>
-        <Button
+            android:background="@drawable/button"></com.skydoves.elasticviews.ElasticButton>
+        <com.skydoves.elasticviews.ElasticButton
             android:id="@+id/go_ranking"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:text="랭킹"
-            android:background="@drawable/button"></Button>
+            android:background="@drawable/button"></com.skydoves.elasticviews.ElasticButton>
 
     </LinearLayout>
 
