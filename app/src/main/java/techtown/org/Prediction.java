@@ -9,7 +9,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -41,8 +43,13 @@ public class Prediction extends AppCompatActivity {
 
     private LineChart mChart;
     RecyclerView recyclerView;
+    RecyclerView stock_recyclerView;
     EditText editText;
     PredictionAdapter adapter;
+    StockAdapter stockAdapter;
+
+    TextView total_text;
+    Button order_btn;
 
     ArrayList<String> items = new ArrayList<>();
 
@@ -51,6 +58,11 @@ public class Prediction extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prediction);
+
+        // 변수 초기화
+        total_text = (TextView) findViewById(R.id.total_text);
+        order_btn = (Button) findViewById(R.id.order_btn);
+
 
         // 곡선 그래프
         mChart = (LineChart) findViewById(R.id.prediction_lineChart);
@@ -138,7 +150,6 @@ public class Prediction extends AppCompatActivity {
         adapter = new PredictionAdapter(getApplicationContext(), items);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
-
         adapter.setOnItemClickListener(new ItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, String code) {
@@ -147,11 +158,28 @@ public class Prediction extends AppCompatActivity {
             }
         });
 
+        // 보유 주식 recycler
+        stock_recyclerView = (RecyclerView)findViewById(R.id.stockRecylcerview);
+        stock_recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+
+        // dumy
+        Stock[] stock_items = new Stock[1];
+        stock_items[0] = new Stock();
+        stock_items[0].setStock_name("삼성전자");
+        stock_items[0].setAmount("123");
+        stock_items[0].setSize(1);
+
+        stockAdapter = new StockAdapter(stock_items);
+        stock_recyclerView.setAdapter(stockAdapter);
+
         // 클릭 리스너
         findViewById(R.id.go_home).setOnClickListener(onClickListener);
         findViewById(R.id.go_notification).setOnClickListener(onClickListener);
         findViewById(R.id.go_disclosure).setOnClickListener(onClickListener);
         findViewById(R.id.go_overview).setOnClickListener(onClickListener);
+        findViewById(R.id.buy_btn).setOnClickListener(onClickListener);
+        findViewById(R.id.sell_btn).setOnClickListener(onClickListener);
+        findViewById(R.id.order_btn).setOnClickListener(onClickListener);
     }
 
     // 백그라운드 동작을 위한 asyncTask
@@ -215,6 +243,16 @@ public class Prediction extends AppCompatActivity {
                 case R.id.edittext:
                     recyclerView.setVisibility(View.VISIBLE);
                     recyclerView.setAdapter(adapter);
+                    break;
+                case R.id.buy_btn:
+                    total_text.setText("총 주문 금액");
+                    order_btn.setText("매수하기");
+                    break;
+                case R.id.sell_btn:
+                    total_text.setText("총 판매 금액");
+                    order_btn.setText("매도하기");
+                    break;
+                case R.id.order_btn:
                     break;
             }
         }

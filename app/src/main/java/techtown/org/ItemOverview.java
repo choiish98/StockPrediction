@@ -149,18 +149,6 @@ public class ItemOverview extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
             }
         });
-        //키보드 숨기기
-//        public static void hideSoftKeyboard(Activity activity) {
-//            InputMethodManager inputMethodManager =
-//                    (InputMethodManager) activity.getSystemService(
-//                            Activity.INPUT_METHOD_SERVICE);
-//            if(inputMethodManager.isAcceptingText()){
-//                inputMethodManager.hideSoftInputFromWindow(
-//                        activity.getCurrentFocus().getWindowToken(),
-//                        0
-//                );
-//            }
-//        }
 
         // 아이템 추가
         try {
