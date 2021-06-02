@@ -44,7 +44,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import static android.graphics.Color.rgb;
@@ -152,9 +154,17 @@ public class Prediction extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(editText2.getText() != null) {
-                    int price = Integer.parseInt(charSequence.toString()) * Integer.parseInt(now_price.getText().toString());
-                    total.setText(String.valueOf(price));
+                if(charSequence != null) {
+                    if (editText2.getText() != null) {
+                        String temp = charSequence.toString().replace(",", "");
+                        String temp2 = now_price.getText().toString().replace(",", "");
+                        int price = Integer.parseInt(temp) * Integer.parseInt(temp2);
+                        total.setText(NumberFormat.getInstance(Locale.getDefault()).format(price));
+                    } else {
+                        total.setText("");
+                    }
+                } else {
+                    total.setText("");
                 }
             }
 
@@ -228,7 +238,8 @@ public class Prediction extends AppCompatActivity {
                     String url = new APIURL().getApiURL();
                     String pointString = new asyncTask(url.concat("/users/get_user_point_api?nickname=").concat(nickname)).execute().get();
                     JSONObject urlObject = new JSONObject(pointString);
-                    point.setText(urlObject.getString("point"));
+                    int temp = Integer.parseInt(urlObject.getString("point"));
+                    point.setText(NumberFormat.getInstance(Locale.getDefault()).format(temp));
 
                     // 내 보유 주식
                     String stock_data = new asyncTask(url.concat("/stocks/api/stocks/simul_stock_list?nickname=").concat(nickname).concat("(카카오)")).execute().get();
@@ -289,7 +300,7 @@ public class Prediction extends AppCompatActivity {
                                 .concat("&nickname=").concat(result.getKakaoAccount().getProfile().getNickname())
                                 .concat("&amount=").concat(editText2.getText().toString())
                                 .concat("&current_price=").concat(now_price.getText().toString())
-                                .concat("&company_name=").concat("삼성전자")).execute();
+                                .concat("&company_name=").concat(editText.getText().toString())).execute();
                     }
                 });
             }
