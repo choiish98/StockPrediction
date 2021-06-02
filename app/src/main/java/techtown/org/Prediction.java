@@ -299,7 +299,7 @@ public class Prediction extends AppCompatActivity {
                                 .concat("tp_secret=").concat(tpScret.getScret())
                                 .concat("&nickname=").concat(result.getKakaoAccount().getProfile().getNickname())
                                 .concat("&amount=").concat(editText2.getText().toString())
-                                .concat("&current_price=").concat(now_price.getText().toString())
+                                .concat("&current_price=").concat(now_price.getText().toString().replace(",",""))
                                 .concat("&company_name=").concat(editText.getText().toString())).execute();
                     }
                 });
