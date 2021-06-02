@@ -119,7 +119,24 @@ public class MainActivity extends AppCompatActivity {
                     gotoActivity(ItemOverview.class);
                     break;
                 case R.id.button3:
-                    gotoActivity(Prediction.class);
+                    AuthService.getInstance().requestAccessTokenInfo(new ApiResponseCallback<AccessTokenInfoResponse>() {
+                        @Override
+                        public void onSessionClosed(ErrorResult errorResult) {
+                            Toast.makeText(getApplicationContext(),"로그인이 필요합니다.",Toast.LENGTH_SHORT);
+                            Log.e("KAKAO_API", "세션이 닫혀 있음: " + errorResult);
+                        }
+
+                        @Override
+                        public void onFailure(ErrorResult errorResult) {
+                            Log.e("KAKAO_API", "토큰 정보 요청 실패: " + errorResult);
+                        }
+
+                        @Override
+                        public void onSuccess(AccessTokenInfoResponse result) {
+                            gotoActivity(Prediction.class);
+                            Log.i("KAKAO_API", "사용자 아이디: " + result.getUserId());
+                        }
+                    });
                     break;
                 case R.id.button4:
                     gotoActivity(Ranking.class);

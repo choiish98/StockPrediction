@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,10 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.kakao.auth.ApiResponseCallback;
+import com.kakao.auth.AuthService;
+import com.kakao.auth.network.response.AccessTokenInfoResponse;
+import com.kakao.network.ErrorResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -285,7 +290,24 @@ public class ItemOverview extends AppCompatActivity {
                     gotoActivity(Ranking.class);
                     break;
                 case R.id.go_predict:
-                    gotoActivity(Prediction.class);
+                    AuthService.getInstance().requestAccessTokenInfo(new ApiResponseCallback<AccessTokenInfoResponse>() {
+                        @Override
+                        public void onSessionClosed(ErrorResult errorResult) {
+                            Toast.makeText(getApplicationContext(),"로그인이 필요합니다.",Toast.LENGTH_SHORT);
+                            Log.e("KAKAO_API", "세션이 닫혀 있음: " + errorResult);
+                        }
+
+                        @Override
+                        public void onFailure(ErrorResult errorResult) {
+                            Log.e("KAKAO_API", "토큰 정보 요청 실패: " + errorResult);
+                        }
+
+                        @Override
+                        public void onSuccess(AccessTokenInfoResponse result) {
+                            gotoActivity(Prediction.class);
+                            Log.i("KAKAO_API", "사용자 아이디: " + result.getUserId());
+                        }
+                    });
                     break;
                 case R.id.edittext:
                     recyclerView.setVisibility(View.VISIBLE);
