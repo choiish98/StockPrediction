@@ -44,6 +44,7 @@ public class Ranking extends AppCompatActivity {
 
             // 정규화 필요
             JSONArray jsonArray = new JSONArray(rankList);
+            Log.e("ranklist", jsonArray.toString());
             rankClass = new Ranklist[jsonArray.length()];
             for(int i = 0;  i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -67,10 +68,12 @@ public class Ranking extends AppCompatActivity {
                         break;
                 }
                 rankClass[i].setRankingName(jsonObject.getString("nickname"));
-                rankClass[i].setRankingTotalPoint(NumberFormat.getInstance(Locale.getDefault()).format(Integer.parseInt(jsonObject.getString("total_point")))+" P");
+                rankClass[i].setRankingTotalPoint(NumberFormat.getInstance(Locale.getDefault()).format(Integer.parseInt(jsonObject.getString("point")))+" P");
                 rankClass[i].setRankingProfit(NumberFormat.getInstance(Locale.getDefault()).format(Integer.parseInt(jsonObject.getString("net_gain")))+" P");
                 rankClass[i].setSize(jsonArray.length());
             }
+
+            Log.e("asedf", rankClass[0].toString());
 
             // 리사이클러뷰에 LinearLayoutManager 객체 지정.
             RecyclerView recyclerView = findViewById(R.id.rankingRecyclerView);
