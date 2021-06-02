@@ -189,8 +189,22 @@ public class Prediction extends AppCompatActivity {
             @Override
             public void onItemClick(View v, String code) {
                 // code에 종목 코드 존재
-                // 그래프 구현 필요
+                try {
+                    // 현재가 가져오기
+                    String url = new APIURL().getApiURL();
+                    String now_price = new asyncTask(url.concat("/stocks/api/stocks/now_price?code=").concat(code)).execute().get();
+                    JSONObject jsonObject = new JSONObject(now_price);
+                    ((TextView) findViewById(R.id.now_price)).setText(jsonObject.getString("stock_info_big_left_price"));
 
+                    // 그래프
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
