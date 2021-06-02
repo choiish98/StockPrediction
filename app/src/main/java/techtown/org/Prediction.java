@@ -190,6 +190,7 @@ public class Prediction extends AppCompatActivity {
             public void onItemClick(View v, String code) {
                 // code에 종목 코드 존재
                 // 그래프 구현 필요
+
             }
         });
 
@@ -211,11 +212,12 @@ public class Prediction extends AppCompatActivity {
                 try {
                     // 내 보유 포인트
                     String url = new APIURL().getApiURL();
-                    String pointString = new GetPoint(url.concat("users/get_user_point_api?nickname=").concat(nickname)).execute().get();
-                    point.setText(pointString);
+                    String pointString = new asyncTask(url.concat("/users/get_user_point_api?nickname=").concat(nickname)).execute().get();
+                    JSONObject urlObject = new JSONObject(pointString);
+                    point.setText(urlObject.getString("point"));
 
                     // 내 보유 주식
-                    String stock_data = new GetStock(url.concat("/stocks/api/stocks/simul_stock_list?nickname=").concat(nickname).concat("(카카오)")).execute().get();
+                    String stock_data = new asyncTask(url.concat("/stocks/api/stocks/simul_stock_list?nickname=").concat(nickname).concat("(카카오)")).execute().get();
                     JSONArray jsonArray = new JSONArray(stock_data);
                     Stock[] stock_items = new Stock[jsonArray.length()];
                     for(int i = 0; i < jsonArray.length(); i++) {
@@ -281,53 +283,12 @@ public class Prediction extends AppCompatActivity {
     }
 
     // 백그라운드 동작을 위한 asyncTask
-    public static class GetStock extends AsyncTask<Integer, Void, String> {
+    public static class asyncTask extends AsyncTask<Integer, Void, String> {
         // Variable to store url
         protected String mURL;
 
         // Constructor
-        public GetStock(String url) {
-            mURL = url;
-        }
-
-        // Background work
-        protected String doInBackground(Integer... params) {
-            String result = null;
-            try {
-                // Open the connection
-                URL url = new URL(mURL);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                InputStream is = conn.getInputStream();
-
-                // Get the stream
-                StringBuilder builder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    builder.append(line);
-                }
-
-                // Set the result
-                result = builder.toString();
-                return result;
-            }
-            catch (Exception e) {
-                // Error calling the rest api
-                Log.e("REST_API", "GET method failed: " + e.getMessage());
-                e.printStackTrace();
-                return null;
-            }
-        }
-    }
-
-    // 백그라운드 동작을 위한 asyncTask
-    public static class GetPoint extends AsyncTask<Integer, Void, String> {
-        // Variable to store url
-        protected String mURL;
-
-        // Constructor
-        public GetPoint(String url) {
+        public asyncTask(String url) {
             mURL = url;
         }
 
