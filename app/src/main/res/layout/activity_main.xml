@@ -23,12 +23,12 @@
             android:textSize="20dp"
             android:layout_gravity="center"
             android:gravity="center" />
-        <Button
+        <com.skydoves.elasticviews.ElasticButton
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="로그인"/>
-        <Button
+        <com.skydoves.elasticviews.ElasticButton
             android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -115,21 +115,22 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_marginBottom="10dp">
-                <Button
+                <com.skydoves.elasticviews.ElasticButton
                     android:id="@+id/button1"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:background="@drawable/button"
-                    android:drawableBottom="@drawable/ic_pr"
+                    android:drawableBottom="@drawable/disclosure"
                     android:paddingBottom="5dp"
                     android:text="뉴스/공시"
                     android:layout_marginRight="10dp"/>
-                <Button
+                <com.skydoves.elasticviews.ElasticButton
                     android:id="@+id/button2"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:background="@drawable/button"
-                    android:drawableBottom="@drawable/ic_pr"
+                    android:drawableBottom="@drawable/overview2"
+                    android:paddingBottom="5dp"
                     android:text="종목개요"
                     android:layout_marginRight="10dp" />
             </LinearLayout>
@@ -141,20 +142,22 @@
                 android:layout_gravity="center"
                 android:gravity="center">
 
-                <Button
+                <com.skydoves.elasticviews.ElasticButton
                     android:id="@+id/button3"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:background="@drawable/button"
-                    android:drawableBottom="@drawable/ic_pr"
+                    android:drawableBottom="@drawable/prediction3"
+                    android:paddingBottom="5dp"
                     android:text="예측"
                     android:layout_marginRight="10dp"/>
-                <Button
+                <com.skydoves.elasticviews.ElasticButton
                     android:id="@+id/button4"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:background="@drawable/button"
-                    android:drawableBottom="@drawable/ic_pr"
+                    android:drawableBottom="@drawable/ranking"
+                    android:paddingBottom="5dp"
                     android:text="랭킹"
                     android:layout_marginRight="10dp"/>
             </LinearLayout>

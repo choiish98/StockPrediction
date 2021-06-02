@@ -25,6 +25,7 @@ import com.kakao.auth.network.response.AccessTokenInfoResponse;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.skydoves.elasticviews.ElasticButton;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -86,6 +87,49 @@ public class MainActivity extends AppCompatActivity {
 
 
         // 클릭 리스너
+        ElasticButton elasticButton1 = (ElasticButton)findViewById(R.id.button1);
+        elasticButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+        ElasticButton elasticButton2 = (ElasticButton)findViewById(R.id.button2);
+        elasticButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+        ElasticButton elasticButton3 = (ElasticButton)findViewById(R.id.button3);
+        elasticButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+        ElasticButton elasticButton4 = (ElasticButton)findViewById(R.id.button4);
+        elasticButton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+        ElasticButton elasticButton_login = (ElasticButton)findViewById(R.id.login);
+        elasticButton_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+        ElasticButton elasticButton_logout = (ElasticButton)findViewById(R.id.logout);
+        elasticButton_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+
         findViewById(R.id.button1).setOnClickListener(onClickListener);
         findViewById(R.id.button2).setOnClickListener(onClickListener);
         findViewById(R.id.button3).setOnClickListener(onClickListener);
@@ -162,4 +206,5 @@ public class MainActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 }

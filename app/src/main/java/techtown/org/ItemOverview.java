@@ -29,6 +29,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.skydoves.elasticviews.ElasticButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -223,6 +224,34 @@ public class ItemOverview extends AppCompatActivity {
         });
 
         // 클릭 리스너
+        ElasticButton elasticButton_go_home = (ElasticButton)findViewById(R.id.go_home);
+        elasticButton_go_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+        ElasticButton elasticButton_go_ranking = (ElasticButton)findViewById(R.id.go_ranking);
+        elasticButton_go_ranking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+        ElasticButton elasticButton_go_disclosure = (ElasticButton)findViewById(R.id.go_disclosure);
+        elasticButton_go_disclosure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });ElasticButton elasticButton_go_predict = (ElasticButton)findViewById(R.id.go_predict);
+        elasticButton_go_predict.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+
         findViewById(R.id.go_home).setOnClickListener(onClickListener);
         findViewById(R.id.go_ranking).setOnClickListener(onClickListener);
         findViewById(R.id.go_disclosure).setOnClickListener(onClickListener);

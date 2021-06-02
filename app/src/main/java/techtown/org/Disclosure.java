@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.skydoves.elasticviews.ElasticButton;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -85,6 +87,34 @@ public class Disclosure extends AppCompatActivity {
         }
 
         // 클릭 리스너
+        ElasticButton elasticButton_go_home = (ElasticButton)findViewById(R.id.go_home);
+        elasticButton_go_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+        ElasticButton elasticButton_go_notification = (ElasticButton)findViewById(R.id.go_notification);
+        elasticButton_go_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+        ElasticButton elasticButton_go_overview = (ElasticButton)findViewById(R.id.go_overview);
+        elasticButton_go_overview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
+        ElasticButton elasticButton_go_predict = (ElasticButton)findViewById(R.id.go_predict);
+        elasticButton_go_predict.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+            }
+        });
         findViewById(R.id.go_home).setOnClickListener(onClickListener);
         findViewById(R.id.go_notification).setOnClickListener(onClickListener);
         findViewById(R.id.go_overview).setOnClickListener(onClickListener);
