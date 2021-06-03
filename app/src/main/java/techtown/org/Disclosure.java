@@ -31,7 +31,7 @@ public class Disclosure extends AppCompatActivity {
 
     // 뉴스 리스트 객체 및 변수 선언
     News[] newsClass;
-    News[] gongsiClass;
+    Gongsi[] gongsiClass;
     int newsIndex = 0;
     int gongsiIndex = 0;
 
@@ -48,7 +48,7 @@ public class Disclosure extends AppCompatActivity {
             JSONArray jsonArray = new JSONArray(newsList);
 
             newsClass = new News[jsonArray.length()];
-            gongsiClass = new News[jsonArray.length()];
+            gongsiClass = new Gongsi[jsonArray.length()];
             for(int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 if(jsonObject.optString("category").equals("news")) {
@@ -62,7 +62,7 @@ public class Disclosure extends AppCompatActivity {
                     newsIndex++;
                 }
                 if(jsonObject.optString("category").equals("gongsi")) {
-                    gongsiClass[gongsiIndex] = new News();
+                    gongsiClass[gongsiIndex] = new Gongsi();
                     gongsiClass[gongsiIndex].setTitle(jsonObject.optString("title"));
                     gongsiClass[gongsiIndex].setSummary(jsonObject.optString("summary"));
                     gongsiClass[gongsiIndex].setPress(jsonObject.optString("press"));

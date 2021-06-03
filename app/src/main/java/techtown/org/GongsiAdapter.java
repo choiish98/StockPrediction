@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class GongsiAdapter extends RecyclerView.Adapter<GongsiAdapter.ViewHolder> {
 
-    private News[] mData = null ;
+    private Gongsi[] mData = null ;
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -41,7 +41,7 @@ public class GongsiAdapter extends RecyclerView.Adapter<GongsiAdapter.ViewHolder
     }
 
     // 생성자에서 데이터 리스트 객체를 전달받음.
-    GongsiAdapter(News[] news) {
+    GongsiAdapter(Gongsi[] news) {
         mData = news;
     }
 

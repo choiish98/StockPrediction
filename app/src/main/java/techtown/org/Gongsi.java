@@ -1,6 +1,6 @@
 package techtown.org;
 
-public class News {
+public class Gongsi {
     String title;
     String summary;
     String date;
@@ -8,7 +8,7 @@ public class News {
     String img;
     String link;
 
-    News() {
+    Gongsi() {
         this.title = null;
         this.summary = null;
         this.date = null;
@@ -40,6 +40,6 @@ public class News {
     public void setLink(String link) { this.link = link; }
     public String getLink() { return this.link; }
     public int size() {
-        return 1;
+        return 5;
     }
 }
