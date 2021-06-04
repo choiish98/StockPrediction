@@ -183,7 +183,7 @@ public class ItemOverview extends AppCompatActivity {
 
                     // data
                     String url = new APIURL().getApiURL();
-                    String value = new RestAPITask(url.concat("/stocks/api/graph_html?companyName=").concat("삼성전자")).execute().get();
+                    String value = new RestAPITask(url.concat("/stocks/api/graph_html?companyName=").concat("LG전자")).execute().get();
                     JSONObject valueObject = new JSONObject(value);
                     JSONArray valueDataObject = valueObject.getJSONArray("data");
                     JSONObject realObject = valueDataObject.getJSONObject(0);
@@ -194,7 +194,7 @@ public class ItemOverview extends AppCompatActivity {
                         yValues.add(new Entry(i, Float.parseFloat(realdata.getString(i))));
                     }
 
-                    LineDataSet set1 = new LineDataSet(yValues, "삼성전자".concat("종가"));
+                    LineDataSet set1 = new LineDataSet(yValues, "LG전자".concat("종가"));
 
                     set1.setFillAlpha(110);
                     set1.setColor(rgb(170, 26, 26));

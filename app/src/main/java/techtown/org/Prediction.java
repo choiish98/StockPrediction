@@ -85,49 +85,6 @@ public class Prediction extends AppCompatActivity {
         point = (TextView) findViewById(R.id.point);
         invest = (LinearLayout) findViewById(R.id.invest);
 
-        // 곡선 그래프
-        mChart = (LineChart) findViewById(R.id.prediction_lineChart);
-
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(false);
-        mChart.setDrawGridBackground(false);
-        mChart.getXAxis().setDrawLabels(false);
-        mChart.getAxisLeft().setDrawLabels(false);
-        mChart.getAxisRight().setDrawLabels(false);
-        mChart.getXAxis().setDrawGridLines(false);
-        mChart.getAxisRight().setDrawGridLines(false);
-        mChart.getAxisLeft().setDrawGridLines(false);
-
-        ArrayList<Entry> yValues = new ArrayList<>();
-
-        yValues.add(new Entry(0, 20f));
-        yValues.add(new Entry(1, 35f));
-        yValues.add(new Entry(2, 46f));
-        yValues.add(new Entry(3, 50f));
-        yValues.add(new Entry(4, 10f));
-        yValues.add(new Entry(5, 60f));
-        yValues.add(new Entry(6, 30f));
-
-        LineDataSet set1 = new LineDataSet(yValues, "Data set 1");
-
-        set1.setFillAlpha(110);
-        set1.setColor(rgb(150, 31, 47));
-        set1.setLineWidth(2f);
-        set1.setCircleColor(rgb(150, 31, 47));
-        set1.setFillColor(rgb(150, 31, 47));
-        set1.setDrawHighlightIndicators(false);
-        set1.setDrawValues(false);
-        set1.setValueTextColor(Color.WHITE);
-
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
-
-        LineData data = new LineData(dataSets);
-
-        mChart.setData(data);
-        // 곡선 그래프
-
         // 종목 검색
         recyclerView = (RecyclerView)findViewById(R.id.searchRecylcerview);
         editText = (EditText)findViewById(R.id.edittext);
@@ -211,7 +168,52 @@ public class Prediction extends AppCompatActivity {
                     ((TextView) findViewById(R.id.now_price)).setText(jsonObject.getString("stock_info_big_left_price"));
 
                     // 그래프
+                    mChart = (LineChart) findViewById(R.id.prediction_lineChart);
+                    findViewById(R.id.predict_layout).setVisibility(View.VISIBLE);
 
+                    //mChart.setOnChartGestureListener(MainActivity.this);
+                    //mChart.setOnChartValueSelectedListener(MainActivity.this);
+
+                    mChart.setDragEnabled(true);
+                    mChart.setScaleEnabled(false);
+                    mChart.setDrawGridBackground(false);
+                    mChart.getXAxis().setDrawLabels(false);
+                    mChart.getAxisRight().setDrawLabels(false);
+                    mChart.getXAxis().setDrawGridLines(false);
+                    mChart.getAxisRight().setDrawGridLines(false);
+                    mChart.getAxisLeft().setDrawGridLines(false);
+
+                    ArrayList<Entry> yValues = new ArrayList<>();
+
+                    String graph = new asyncTask(url.concat("/stocks/api/graph_html?companyName=").concat("LG전자")).execute().get();
+                    JSONObject valueObject = new JSONObject(graph);
+                    JSONArray valueDataObject = valueObject.getJSONArray("data");
+                    JSONObject realObject = valueDataObject.getJSONObject(0);
+                    JSONArray realdata = realObject.getJSONArray("y");
+                    Log.e("realdata", realdata.toString());
+
+                    for(int i = 0; i < realdata.length(); i++) {
+                        yValues.add(new Entry(i, Float.parseFloat(realdata.getString(i))));
+                    }
+
+                    LineDataSet set1 = new LineDataSet(yValues, "LG전자".concat("종가"));
+
+                    set1.setFillAlpha(110);
+                    set1.setColor(rgb(170, 26, 26));
+                    set1.setLineWidth(2f);
+                    set1.setCircleColor(rgb(170, 26, 26));
+                    set1.setFillColor(rgb(170, 26, 26));
+                    set1.setDrawHighlightIndicators(false);
+                    set1.setDrawValues(false);
+                    set1.setValueTextColor(Color.WHITE);
+
+
+                    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                    dataSets.add(set1);
+
+                    LineData data = new LineData(dataSets);
+
+                    mChart.setData(data);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

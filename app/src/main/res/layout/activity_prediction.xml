@@ -79,6 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
                     android:orientation="horizontal"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/ic_rectangle">
 
                     <EditText
@@ -109,15 +110,32 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center">
+                android:layout_marginBottom="10dp">
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:visibility="gone"
-                    android:id="@+id/prediction_lineChart"/>
+                    android:text="예측 그래프"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <LinearLayout
+                    android:id="@+id/predict_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/prediction_lineChart"/>
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
