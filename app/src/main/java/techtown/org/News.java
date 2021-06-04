@@ -40,6 +40,6 @@ public class News {
     public void setLink(String link) { this.link = link; }
     public String getLink() { return this.link; }
     public int size() {
-        return 1;
+        return 5;
     }
 }

@@ -185,7 +185,7 @@ public class Prediction extends AppCompatActivity {
 
                     ArrayList<Entry> yValues = new ArrayList<>();
 
-                    String graph = new asyncTask(url.concat("/stocks/api/graph_html?companyName=").concat("LG전자")).execute().get();
+                    String graph = new asyncTask(url.concat("/stocks/api/graph_html?companyName=").concat("LG")).execute().get();
                     JSONObject valueObject = new JSONObject(graph);
                     JSONArray valueDataObject = valueObject.getJSONArray("data");
                     JSONObject realObject = valueDataObject.getJSONObject(0);
@@ -196,7 +196,7 @@ public class Prediction extends AppCompatActivity {
                         yValues.add(new Entry(i, Float.parseFloat(realdata.getString(i))));
                     }
 
-                    LineDataSet set1 = new LineDataSet(yValues, "LG전자".concat("종가"));
+                    LineDataSet set1 = new LineDataSet(yValues, "LG".concat("종가"));
 
                     set1.setFillAlpha(110);
                     set1.setColor(rgb(170, 26, 26));
